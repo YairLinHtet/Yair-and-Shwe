@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yair & Shwe</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="images/png" href="images/Logo SH.png" />
+  </head>
+  <body>
+    <main class="glass-container">
+      <!-- Header with Image Logo -->
+      <header class="header">
+        <div class="logo-box">
+          <img src="images/Logo SH.png" alt="Logo" class="site-logo" />
+        </div>
+        <div class="profile-pics">
+          <div class="circle-avatar">
+            <img
+              src="https://avatars.githubusercontent.com/u/210270880?v=4"
+              alt="Yair"
+            />
+          </div>
+          <div class="circle-avatar">
+            <img src="images/Logo SH.png" alt="" />
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Hero Glass Card -->
+      <section class="hero-card glass-panel">
+        <h2>Together For</h2>
+
+        <!-- Two-row timer layout -->
+        <div id="together-counter" class="timer-display">
+          <div id="date-row" class="timer-row primary-row">Loading...</div>
+          <div id="time-row" class="timer-row secondary-row">00:00:00</div>
+        </div>
+
+        <p class="story-date">Our Story began on 10.07.2026</p>
+      </section>
+
+      <!-- Couple Profiles Section -->
+      <section class="profile-section">
+        <div class="profile-card glass-panel">
+          <h3>Yair Linn Htet</h3>
+          <div class="photo-placeholder">
+            <img src="https://avatars.githubusercontent.com/u/210270880?v=4" alt="">
+          </div>
+        </div>
+        <div class="heart-divider">
+          <span class="heart-icon">❤️</span>
+        </div>
+        <div class="profile-card glass-panel">
+          <h3>Shwe Zin Htun</h3>
+          <div class="photo-placeholder"></div>
+        </div>
+      </section>
+
+      <!-- Horizontal Scrollable Memories -->
+      <section class="memories-section">
+        <div class="section-title">
+          <h2>OUR MEMORIES</h2>
+        </div>
+
+        <div class="memories-scroll-container" id="memories-list">
+          <!-- Loaded via memories.json -->
+        </div>
+      </section>
+
+      <!-- Favorites Grid Section -->
+      <section class="favorites-grid">
+        <div class="fav-card glass-panel">
+          <h3>FAVOURITE MOVIES</h3>
+          <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
+          <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
+          <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
+          <span class="arrow-down">▼</span>
+        </div>
+
+        <div class="fav-card glass-panel">
+          <h3>FAVOURITE SERIES</h3>
+          <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
+          <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
+          <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
+          <span class="arrow-down">▼</span>
+        </div>
+
+        <div class="fav-card glass-panel">
+          <h3>FAVOURITE Character</h3>
+          <div class="char-info">
+            <div class="photo-placeholder mini"></div>
+            <span>Baymax (Big Hero 6)</span>
+          </div>
+          <span class="arrow-down">▼</span>
+        </div>
+
+        <div class="fav-card glass-panel">
+          <h3>OUR PLAYLIST</h3>
+          <div class="playlist-item">
+            <div class="photo-placeholder mini"></div>
+            <div class="track-info">
+              <span>Song Title</span>
+              <div class="progress-bar"></div>
+            </div>
+            <button class="play-btn">▶</button>
+          </div>
+          <div class="playlist-item">
+            <div class="photo-placeholder mini"></div>
+            <div class="track-info">
+              <span>Song Title</span>
+              <div class="progress-bar"></div>
+            </div>
+            <button class="play-btn">▶</button>
+          </div>
+          <span class="arrow-down">▼</span>
+        </div>
+      </section>
+
+      <!-- Gallery Title -->
+      <section class="gallery-title">
+        <h2>Our Gallery</h2>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

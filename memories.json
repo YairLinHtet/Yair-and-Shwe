@@ -1,0 +1,37 @@
+[
+  {
+    "category": "Anniversary",
+    "title": "Our Journey Began",
+    "date": "10.07.2026",
+    "description": "The day we officially started our story together.",
+    "image": ""
+  },
+  {
+    "category": "Confession",
+    "title": "Love Confession",
+    "date": "1.08.2026",
+    "description": "ဖွင့်ပြောသောနေ့ ",
+    "image": ""
+  },
+  {
+    "category": "Monthsary",
+    "title": "1st Month Anniversary",
+    "date": "10.08.2026",
+    "description": "Celebrated our very first month together.",
+    "image": ""
+  },
+  {
+    "category": "Birthday",
+    "title": "His Birthday",
+    "date": "17.06.2027",
+    "description": "Surprise celebration full of love and gifts.",
+    "image": ""
+  },
+  {
+    "category": "Birthday",
+    "title": "Her Birthday",
+    "date": "22.12.2027",
+    "description": "A special birthday trip together.",
+    "image": ""
+  }
+]
