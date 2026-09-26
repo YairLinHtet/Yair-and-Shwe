@@ -1,23 +1,37 @@
 [
   {
-    "category": "Anniversary",
-    "title": "Our Journey Began",
-    "date": "10.07.2026",
-    "description": "The day we officially started our story together.",
-    "image": ""
+    "category": "First Message",
+    "title": "Telegram Message",
+    "date": "26.07.2026",
+    "description": "ဖိုင် ၄ ခု ကစတင်ခဲ့တဲ့ တို့နှစ်ယောက်ရဲ့ အစပြုခြင်းပုံပြင်လေး",
+    "image": "images/Telegram SS.jpg"
   },
   {
     "category": "Confession",
     "title": "Love Confession",
     "date": "1.08.2026",
-    "description": "ဖွင့်ပြောသောနေ့ ",
+    "description": "ရင်ထဲက အချစ်တွေကို စတင်ဖွင့်ဟဝန်ခံခဲ့သည့်နေ့",
+    "image": ""
+  },
+  {
+    "category": "Anniversary",
+    "title": "Love Accepted",
+    "date": "10.08.2026",
+    "description": "သူမဆီက 'ချစ်တယ်' ဆိုတဲ့ သာယာလှပတဲ့ အဖြေလေးကို ရရှိခဲ့သည့်နေ့",
     "image": ""
   },
   {
     "category": "Monthsary",
     "title": "1st Month Anniversary",
-    "date": "10.08.2026",
-    "description": "Celebrated our very first month together.",
+    "date": "10.09.2026",
+    "description": "တို့နှစ်ယောက် လက်တွဲခဲ့ကြတာ တပြိုင်နက်တည်း တစ်လပြည့်ခဲ့ပြီ",
+    "image": ""
+  },
+  {
+    "category": "Monthsary",
+    "title": "2nd Month Anniversary",
+    "date": "10.10.2026",
+    "description": "သံယောဇဉ်တွေ ပိုမိုခိုင်မြဲလာတဲ့ နှစ်လမြောက် အမှတ်တရရက်စွဲလေး",
     "image": ""
   },
   {

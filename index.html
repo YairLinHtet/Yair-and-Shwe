@@ -22,7 +22,7 @@
             />
           </div>
           <div class="circle-avatar">
-            <img src="images/Logo SH.png" alt="" />
+            <img src="images/Kalaylay.jpg" alt="" />
           </div>
         </div>
       </header>
@@ -45,15 +45,22 @@
         <div class="profile-card glass-panel">
           <h3>Yair Linn Htet</h3>
           <div class="photo-placeholder">
-            <img src="https://avatars.githubusercontent.com/u/210270880?v=4" alt="">
+            <img
+              src="https://avatars.githubusercontent.com/u/210270880?v=4"
+              alt=""
+            />
           </div>
+          <p>17.6.1998</p>
         </div>
         <div class="heart-divider">
           <span class="heart-icon">❤️</span>
         </div>
         <div class="profile-card glass-panel">
           <h3>Shwe Zin Htun</h3>
-          <div class="photo-placeholder"></div>
+          <div class="photo-placeholder">
+            <img src="images/Kalaylay.jpg" alt="" />
+          </div>
+          <p>14.12.2005</p>
         </div>
       </section>
 
@@ -70,59 +77,208 @@
 
       <!-- Favorites Grid Section -->
       <section class="favorites-grid">
-        <div class="fav-card glass-panel">
+        <!-- FAVOURITE MOVIES -->
+        <div class="fav-card glass-panel" id="fav-movies">
           <h3>FAVOURITE MOVIES</h3>
-          <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
-          <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
-          <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
-          <span class="arrow-down">▼</span>
+          <div class="fav-list-container">
+            <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
+            <div class="list-item"><span>YOUR NAME (2016)</span></div>
+            <div class="list-item"><span>WEATHERING WITH YOU (2019)</span></div>
+            <!-- Hidden Items (shown on expand) -->
+            <div class="expandable-content">
+              <div class="list-item"><span>SUZUME (2022)</span></div>
+              <div class="list-item"><span>A SILENT VOICE (2016)</span></div>
+            </div>
+          </div>
+          <button class="arrow-btn" onclick="toggleExpand('fav-movies')">
+            <span class="arrow-down">▼</span>
+          </button>
         </div>
 
-        <div class="fav-card glass-panel">
+        <!-- FAVOURITE SERIES -->
+        <div class="fav-card glass-panel" id="fav-series">
           <h3>FAVOURITE SERIES</h3>
-          <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
-          <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
-          <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
-          <span class="arrow-down">▼</span>
-        </div>
-
-        <div class="fav-card glass-panel">
-          <h3>FAVOURITE Character</h3>
-          <div class="char-info">
-            <div class="photo-placeholder mini"></div>
-            <span>Baymax (Big Hero 6)</span>
+          <div class="fav-list-container">
+            <div class="list-item"><span>ARCANE (2021)</span></div>
+            <div class="list-item"><span>ATLA (2005)</span></div>
+            <div class="list-item"><span>STRANGER THINGS (2016)</span></div>
+            <!-- Hidden Items -->
+            <div class="expandable-content">
+              <div class="list-item"><span>FIRST LOVE (2022)</span></div>
+              <div class="list-item"><span>LOKI (2021)</span></div>
+            </div>
           </div>
-          <span class="arrow-down">▼</span>
+          <button class="arrow-btn" onclick="toggleExpand('fav-series')">
+            <span class="arrow-down">▼</span>
+          </button>
         </div>
 
-        <div class="fav-card glass-panel">
+        <!-- FAVOURITE CHARACTERS -->
+        <div class="fav-card glass-panel" id="fav-characters">
+          <h3>FAVOURITE CHARACTER</h3>
+          <div class="fav-list-container">
+            <div class="char-info">
+              <div class="photo-placeholder mini"></div>
+              <span>Baymax (Big Hero 6)</span>
+            </div>
+            <div class="char-info">
+              <div class="photo-placeholder mini"></div>
+              <span>Toothless (HTTYD)</span>
+            </div>
+            <div class="char-info">
+              <div class="photo-placeholder mini"></div>
+              <span>Wall-E (Wall-E)</span>
+            </div>
+            <!-- Hidden Items -->
+            <div class="expandable-content">
+              <div class="char-info">
+                <div class="photo-placeholder mini"></div>
+                <span>Groot (GOTG)</span>
+              </div>
+            </div>
+          </div>
+          <button class="arrow-btn" onclick="toggleExpand('fav-characters')">
+            <span class="arrow-down">▼</span>
+          </button>
+        </div>
+
+        <!-- OUR PLAYLIST -->
+        <div class="fav-card glass-panel" id="fav-playlist">
           <h3>OUR PLAYLIST</h3>
-          <div class="playlist-item">
-            <div class="photo-placeholder mini"></div>
-            <div class="track-info">
-              <span>Song Title</span>
-              <div class="progress-bar"></div>
+          <div class="fav-list-container">
+            <!-- Track 1 -->
+            <div class="playlist-item" id="track-1">
+              <div class="photo-placeholder mini"></div>
+              <div class="track-info">
+                <span>Song Title 1</span>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" id="progress-1"></div>
+                </div>
+              </div>
+              <button
+                class="play-btn"
+                onclick="
+                  toggleAudio(
+                    1,
+                    'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+                  )
+                "
+              >
+                ▶
+              </button>
+              <audio
+                id="audio-1"
+                src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+              ></audio>
             </div>
-            <button class="play-btn">▶</button>
-          </div>
-          <div class="playlist-item">
-            <div class="photo-placeholder mini"></div>
-            <div class="track-info">
-              <span>Song Title</span>
-              <div class="progress-bar"></div>
+
+            <!-- Track 2 -->
+            <div class="playlist-item" id="track-2">
+              <div class="photo-placeholder mini"></div>
+              <div class="track-info">
+                <span>Song Title 2</span>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" id="progress-2"></div>
+                </div>
+              </div>
+              <button
+                class="play-btn"
+                onclick="
+                  toggleAudio(
+                    2,
+                    'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+                  )
+                "
+              >
+                ▶
+              </button>
+              <audio
+                id="audio-2"
+                src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+              ></audio>
             </div>
-            <button class="play-btn">▶</button>
+
+            <!-- Track 3 -->
+            <div class="playlist-item" id="track-3">
+              <div class="photo-placeholder mini"></div>
+              <div class="track-info">
+                <span>Song Title 3</span>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" id="progress-3"></div>
+                </div>
+              </div>
+              <button
+                class="play-btn"
+                onclick="
+                  toggleAudio(
+                    3,
+                    'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+                  )
+                "
+              >
+                ▶
+              </button>
+              <audio
+                id="audio-3"
+                src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+              ></audio>
+            </div>
+
+            <!-- Hidden Tracks -->
+            <div class="expandable-content">
+              <!-- Track 4 -->
+              <div class="playlist-item" id="track-4">
+                <div class="photo-placeholder mini"></div>
+                <div class="track-info">
+                  <span>Song Title 4</span>
+                  <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-4"></div>
+                  </div>
+                </div>
+                <button
+                  class="play-btn"
+                  onclick="
+                    toggleAudio(
+                      4,
+                      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+                    )
+                  "
+                >
+                  ▶
+                </button>
+                <audio
+                  id="audio-4"
+                  src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+                ></audio>
+              </div>
+            </div>
           </div>
-          <span class="arrow-down">▼</span>
+          <button class="arrow-btn" onclick="toggleExpand('fav-playlist')">
+            <span class="arrow-down">▼</span>
+          </button>
         </div>
       </section>
 
-      <!-- Gallery Title -->
-      <section class="gallery-title">
-        <h2>Our Gallery</h2>
+      <!-- Hidden Global Audio Player -->
+      <audio id="global-audio-player"></audio>
+
+      <!-- Our Gallery Section -->
+      <section class="gallery-section">
+        <div class="gallery-title">
+          <h2>OUR GALLERY</h2>
+        </div>
+
+        <div id="gallery-container" class="gallery-container">
+          <!-- Dynamically populated via gallery.json -->
+        </div>
       </section>
     </main>
 
     <script src="script.js"></script>
+    <!-- Image Modal Popup -->
+    <div id="image-modal" class="image-modal">
+      <span class="modal-close">&times;</span>
+      <img class="modal-content" id="modal-img" alt="Enlarged Memory Image" />
+    </div>
   </body>
 </html>
