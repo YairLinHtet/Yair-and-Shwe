@@ -22,17 +22,40 @@
   },
   {
     "category": "Monthsary",
-    "title": "1st Month Anniversary",
+    "title": "1st Monthsary",
     "date": "10.09.2026",
     "description": "တို့နှစ်ယောက် လက်တွဲခဲ့ကြတာ တပြိုင်နက်တည်း တစ်လပြည့်ခဲ့ပြီ",
     "image": ""
   },
   {
     "category": "Monthsary",
-    "title": "2nd Month Anniversary",
+    "title": "2nd Monthsary",
     "date": "10.10.2026",
     "description": "သံယောဇဉ်တွေ ပိုမိုခိုင်မြဲလာတဲ့ နှစ်လမြောက် အမှတ်တရရက်စွဲလေး",
     "image": ""
+  },
+
+  {
+    "category": "Stylish",
+    "title": "Her Personal Stylish",
+    "date": "6.08.2026",
+    "description": "ချစ်သူလေးရဲ့ ဆံပင်ကျစ်ပေးတဲ့နေ့က ရိုက်ထားသောပုံလေး",
+    "image": "images/firsthairstyle.jpg"
+  },
+
+  {
+    "category": "Stylish",
+    "title": "Her Personal Stylish 2nd",
+    "date": "7.08.2026",
+    "description": "ချစ်သူလေးရဲ့ ဆံပင် ဒုတိယအကြိမ်ကျစ်ပေးတဲ့နေ့က ရိုက်ထားသောပုံလေး",
+    "image": "images/secondhairstyle.jpg"
+  },
+  {
+    "category": "VideoCall",
+    "title": "Video Call",
+    "date": "29.08.2026",
+    "description": "Video call နဲ့ makeup ပြင်ထားတာကိုလာပြသောနေ့က",
+    "image": "images/1st video call.jpg"
   },
   {
     "category": "Birthday",
