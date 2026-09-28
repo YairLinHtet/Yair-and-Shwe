@@ -2,37 +2,23 @@
   {
     "category": "First Message",
     "title": "Telegram Message",
-    "date": "26.07.2026",
+    "date": "26.06.2026",
     "description": "ဖိုင် ၄ ခု ကစတင်ခဲ့တဲ့ တို့နှစ်ယောက်ရဲ့ အစပြုခြင်းပုံပြင်လေး",
     "image": "images/Telegram SS.jpg"
   },
   {
     "category": "Confession",
     "title": "Love Confession",
-    "date": "1.08.2026",
+    "date": "1.07.2026",
     "description": "ရင်ထဲက အချစ်တွေကို စတင်ဖွင့်ဟဝန်ခံခဲ့သည့်နေ့",
-    "image": ""
+    "image": "images/loveconfession.jpg"
   },
   {
     "category": "Anniversary",
     "title": "Love Accepted",
-    "date": "10.08.2026",
+    "date": "10.07.2026",
     "description": "သူမဆီက 'ချစ်တယ်' ဆိုတဲ့ သာယာလှပတဲ့ အဖြေလေးကို ရရှိခဲ့သည့်နေ့",
-    "image": ""
-  },
-  {
-    "category": "Monthsary",
-    "title": "1st Monthsary",
-    "date": "10.09.2026",
-    "description": "တို့နှစ်ယောက် လက်တွဲခဲ့ကြတာ တပြိုင်နက်တည်း တစ်လပြည့်ခဲ့ပြီ",
-    "image": ""
-  },
-  {
-    "category": "Monthsary",
-    "title": "2nd Monthsary",
-    "date": "10.10.2026",
-    "description": "သံယောဇဉ်တွေ ပိုမိုခိုင်မြဲလာတဲ့ နှစ်လမြောက် အမှတ်တရရက်စွဲလေး",
-    "image": ""
+    "image": "images/loveletter.jpg"
   },
 
   {
@@ -50,11 +36,40 @@
     "description": "ချစ်သူလေးရဲ့ ဆံပင် ဒုတိယအကြိမ်ကျစ်ပေးတဲ့နေ့က ရိုက်ထားသောပုံလေး",
     "image": "images/secondhairstyle.jpg"
   },
+
+  {
+    "category": "No Smoking",
+    "title": "Reduce Smoking",
+    "date": "13.07.2026",
+    "description": "ဆေးလိပ်တစ်ရက်သုံးလိပ်ထက်ပိုမသောက်ရဘူးလို့ကတိပေးခဲ့",
+    "image": "images/nosmoking.jpg"
+  },
+  {
+    "category": "No Smoking",
+    "title": "No Smoking",
+    "date": "16.07.2026",
+    "description": "ဆေးလိပ်ကိုလုံးဝဖျက်ဖို့ကတိပေးခဲ့သောနေ့",
+    "image": "images/nosmoking.jpg"
+  },
+  {
+    "category": "Monthsary",
+    "title": "1st Monthsary",
+    "date": "10.08.2026",
+    "description": "တို့နှစ်ယောက် လက်တွဲခဲ့ကြတာ တပြိုင်နက်တည်း တစ်လပြည့်ခဲ့ပြီ",
+    "image": ""
+  },
+  {
+    "category": "Monthsary",
+    "title": "2nd Monthsary",
+    "date": "10.09.2026",
+    "description": "သံယောဇဉ်တွေ ပိုမိုခိုင်မြဲလာတဲ့ နှစ်လမြောက် အမှတ်တရရက်စွဲလေး",
+    "image": ""
+  },
   {
     "category": "VideoCall",
     "title": "Video Call",
     "date": "29.08.2026",
-    "description": "Video call နဲ့ makeup ပြင်ထားတာကိုလာပြသောနေ့က",
+    "description": "Video call နဲ့ makeup ပြင်ထားတာကိုလာပြတာချစ်စရာလေး",
     "image": "images/1st video call.jpg"
   },
   {
@@ -67,7 +82,7 @@
   {
     "category": "Birthday",
     "title": "Her Birthday",
-    "date": "22.12.2027",
+    "date": "14.12.2027",
     "description": "A special birthday trip together.",
     "image": ""
   }
