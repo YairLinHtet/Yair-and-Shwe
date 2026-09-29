@@ -6,7 +6,6 @@ function updateCounter() {
   const dateRow = document.getElementById("date-row");
   const timeRow = document.getElementById("time-row");
 
-  // Handle case where start date is in the future
   if (now < startDate) {
     const diffTime = Math.abs(startDate - now);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -34,7 +33,6 @@ function updateCounter() {
   const minutes = String(now.getMinutes()).padStart(2, "0");
   const seconds = String(now.getSeconds()).padStart(2, "0");
 
-  // Display Logic based on Year Anniversary status
   if (years >= 1) {
     dateRow.textContent = `${years} Year${years > 1 ? "s" : ""} ${months} Month${months !== 1 ? "s" : ""} ${days} Day${days !== 1 ? "s" : ""}`;
   } else {
@@ -70,7 +68,6 @@ async function loadMemories() {
       )
       .join("");
 
-    // Setup Click Event for Modal Popup
     setupImageModal();
   } catch (error) {
     console.error("Error loading memories JSON:", error);
@@ -84,7 +81,6 @@ function setupImageModal() {
   const modalImg = document.getElementById("modal-img");
   const closeBtn = document.querySelector(".modal-close");
 
-  // Click card image to open full size
   document.querySelectorAll(".card-img").forEach((imgCard) => {
     imgCard.addEventListener("click", () => {
       const imgSrc = imgCard.getAttribute("data-img");
@@ -95,12 +91,10 @@ function setupImageModal() {
     });
   });
 
-  // Close modal when clicking 'X'
   closeBtn.addEventListener("click", () => {
     modal.classList.remove("active");
   });
 
-  // Close modal when clicking outside the image
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
       modal.classList.remove("active");
@@ -108,8 +102,6 @@ function setupImageModal() {
   });
 }
 
-// Fetch dynamic gallery from gallery.json
-// Fetch dynamic gallery from gallery.json
 async function loadGallery() {
   const container = document.getElementById("gallery-container");
 
@@ -136,7 +128,6 @@ async function loadGallery() {
       )
       .join("");
 
-    // Setup Click Event for Gallery Modal Popup
     setupGalleryModal();
   } catch (error) {
     console.error("Error loading gallery JSON:", error);
@@ -149,7 +140,6 @@ function setupGalleryModal() {
   const modal = document.getElementById("image-modal");
   const modalImg = document.getElementById("modal-img");
 
-  // Click gallery image to open full size
   document.querySelectorAll(".gallery-img").forEach((img) => {
     img.addEventListener("click", () => {
       const imgSrc = img.getAttribute("data-img");
@@ -161,13 +151,11 @@ function setupGalleryModal() {
   });
 }
 
-// Expand / Collapse Favorites Function
 function toggleExpand(cardId) {
   const card = document.getElementById(cardId);
   card.classList.toggle("expanded");
 }
 
-// Global Audio Tracker
 let currentPlayingId = null;
 
 function toggleAudio(trackId, audioUrl) {
@@ -175,7 +163,6 @@ function toggleAudio(trackId, audioUrl) {
   const playBtn = document.querySelector(`#track-${trackId} .play-btn`);
   const progressBar = document.getElementById(`progress-${trackId}`);
 
-  // Pause previous track if another track is playing
   if (currentPlayingId && currentPlayingId !== trackId) {
     const prevAudio = document.getElementById(`audio-${currentPlayingId}`);
     const prevBtn = document.querySelector(
@@ -192,20 +179,17 @@ function toggleAudio(trackId, audioUrl) {
     }
   }
 
-  // Play / Pause toggle logic
   if (audioElement.paused) {
     audioElement.play();
     playBtn.textContent = "❚❚";
     currentPlayingId = trackId;
 
-    // Real-time progress bar update
     audioElement.ontimeupdate = () => {
       const percentage =
         (audioElement.currentTime / audioElement.duration) * 100;
       progressBar.style.width = `${percentage}%`;
     };
 
-    // Reset when audio finishes
     audioElement.onended = () => {
       playBtn.textContent = "▶";
       progressBar.style.width = "0%";
@@ -218,8 +202,168 @@ function toggleAudio(trackId, audioUrl) {
   }
 }
 
+/* ================= FLOATING BALL DRAG & MENU LOGIC ================= */
+function setupFloatingBall() {
+  const widget = document.getElementById('floating-widget');
+  const ball = document.getElementById('floating-ball');
+  const menu = document.getElementById('floating-menu');
+
+  let isDragging = false;
+  let hasMoved = false;
+  let startX, startY, initialLeft, initialTop;
+
+  ball.addEventListener('mousedown', startDrag);
+  ball.addEventListener('touchstart', startDrag, { passive: false });
+
+  function startDrag(e) {
+    isDragging = true;
+    hasMoved = false;
+
+    const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+    startX = clientX;
+    startY = clientY;
+
+    const rect = widget.getBoundingClientRect();
+    initialLeft = rect.left;
+    initialTop = rect.top;
+
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('touchmove', onDrag, { passive: false });
+    document.addEventListener('mouseup', stopDrag);
+    document.addEventListener('touchend', stopDrag);
+  }
+
+  function onDrag(e) {
+    if (!isDragging) return;
+
+    const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+    const deltaX = clientX - startX;
+    const deltaY = clientY - startY;
+
+    if (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5) {
+      hasMoved = true;
+    }
+
+    if (hasMoved) {
+      e.preventDefault();
+
+      let newLeft = initialLeft + deltaX;
+      let newTop = initialTop + deltaY;
+
+      const padding = 10;
+      const maxLeft = window.innerWidth - widget.offsetWidth - padding;
+      const maxTop = window.innerHeight - widget.offsetHeight - padding;
+
+      newLeft = Math.max(padding, Math.min(newLeft, maxLeft));
+      newTop = Math.max(padding, Math.min(newTop, maxTop));
+
+      widget.style.bottom = 'auto';
+      widget.style.right = 'auto';
+      widget.style.left = `${newLeft}px`;
+      widget.style.top = `${newTop}px`;
+    }
+  }
+
+  function stopDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+
+    document.removeEventListener('mousemove', onDrag);
+    document.removeEventListener('touchmove', onDrag);
+    document.removeEventListener('mouseup', stopDrag);
+    document.removeEventListener('touchend', stopDrag);
+  }
+
+  ball.addEventListener('click', () => {
+    if (!hasMoved) {
+      menu.classList.toggle('hidden');
+    }
+  });
+
+  document.querySelectorAll('.nav-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      menu.classList.add('hidden');
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!widget.contains(e.target)) {
+      menu.classList.add('hidden');
+    }
+  });
+}
+
+/* ================= PWA INSTALLATION SYSTEM ================= */
+let deferredPrompt = null;
+
+function setupPWA() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+      .then(() => console.log('Service Worker Registered successfully.'))
+      .catch((err) => console.error('Service Worker Registration failed:', err));
+  }
+
+  const pwaModal = document.getElementById('pwa-modal');
+  const pwaModalClose = document.getElementById('pwa-modal-close');
+  const pwaInstallNavBtn = document.getElementById('pwa-install-nav-btn');
+  const pwaInstallBtn = document.getElementById('pwa-install-btn');
+  const pwaNativeBox = document.getElementById('pwa-native-box');
+  const pwaIosInstructions = document.getElementById('pwa-ios-instructions');
+
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  pwaInstallNavBtn.addEventListener('click', () => {
+    document.getElementById('floating-menu').classList.add('hidden');
+    pwaModal.classList.add('active');
+
+    if (deferredPrompt) {
+      pwaNativeBox.style.display = 'block';
+      pwaIosInstructions.style.display = 'none';
+    } else if (isIOS) {
+      pwaNativeBox.style.display = 'none';
+      pwaIosInstructions.style.display = 'block';
+    } else {
+      pwaNativeBox.style.display = 'block';
+      pwaIosInstructions.style.display = 'none';
+    }
+  });
+
+  pwaInstallBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`User prompt outcome: ${outcome}`);
+      deferredPrompt = null;
+      pwaModal.classList.remove('active');
+    } else {
+      alert('Browser မူလ Install Prompt အဆင်မသင့်ပါက Browser Menu ထဲရှိ "Add to Home Screen" ကို အသုံးပြုပေးပါ။');
+    }
+  });
+
+  pwaModalClose.addEventListener('click', () => {
+    pwaModal.classList.remove('active');
+  });
+
+  pwaModal.addEventListener('click', (e) => {
+    if (e.target === pwaModal) {
+      pwaModal.classList.remove('active');
+    }
+  });
+}
+
 // Run initializations
 updateCounter();
 setInterval(updateCounter, 1000);
 loadMemories();
 loadGallery();
+setupFloatingBall();
+setupPWA();

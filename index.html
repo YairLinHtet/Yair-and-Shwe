@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yair & Shwe</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="images/png" href="images/Logo SH.png" />
+    <link rel="icon" type="image/png" href="images/Logo SH.png" />
+    
+    <!-- PWA Configurations -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#3d1c47" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Yair & Shwe" />
+    <link rel="apple-touch-icon" href="images/Logo SH.png" />
   </head>
   <body>
     <main class="glass-container">
@@ -22,13 +30,13 @@
             />
           </div>
           <div class="circle-avatar">
-            <img src="images/Kalaylay.jpg" alt="" />
+            <img src="images/Kalaylay.jpg" alt="Shwe" />
           </div>
         </div>
       </header>
 
       <!-- Main Hero Glass Card -->
-      <section class="hero-card glass-panel">
+      <section class="hero-card glass-panel" id="hero">
         <h2>Together For</h2>
 
         <!-- Two-row timer layout -->
@@ -41,13 +49,13 @@
       </section>
 
       <!-- Couple Profiles Section -->
-      <section class="profile-section">
+      <section class="profile-section" id="profiles">
         <div class="profile-card glass-panel">
           <h3>Yair Linn Htet</h3>
           <div class="photo-placeholder">
             <img
               src="https://avatars.githubusercontent.com/u/210270880?v=4"
-              alt=""
+              alt="Yair"
             />
           </div>
           <p>17.6.1998</p>
@@ -58,14 +66,14 @@
         <div class="profile-card glass-panel">
           <h3>Shwe Zin Htun</h3>
           <div class="photo-placeholder">
-            <img src="images/Kalaylay.jpg" alt="" />
+            <img src="images/Kalaylay.jpg" alt="Shwe" />
           </div>
           <p>14.12.2005</p>
         </div>
       </section>
 
       <!-- Horizontal Scrollable Memories -->
-      <section class="memories-section">
+      <section class="memories-section" id="memories">
         <div class="section-title">
           <h2>OUR MEMORIES</h2>
         </div>
@@ -76,7 +84,7 @@
       </section>
 
       <!-- Favorites Grid Section -->
-      <section class="favorites-grid">
+      <section class="favorites-grid" id="favorites">
         <!-- FAVOURITE MOVIES -->
         <div class="fav-card glass-panel" id="fav-movies">
           <h3>FAVOURITE MOVIES</h3>
@@ -263,7 +271,7 @@
       <audio id="global-audio-player"></audio>
 
       <!-- Our Gallery Section -->
-      <section class="gallery-section">
+      <section class="gallery-section" id="gallery">
         <div class="gallery-title">
           <h2>OUR GALLERY</h2>
         </div>
@@ -274,11 +282,52 @@
       </section>
     </main>
 
-    <script src="script.js"></script>
+    <!-- iOS Glassmorphism Draggable Floating Ball Navigation -->
+    <div id="floating-widget" class="floating-widget">
+      <button id="floating-ball" class="floating-ball" aria-label="Open Navigation">
+        <span class="heart-pulse-icon">💖</span>
+      </button>
+
+      <nav id="floating-menu" class="floating-menu hidden">
+        <ul>
+          <li><a href="#hero" class="nav-link">Home</a></li>
+          <li><a href="#profiles" class="nav-link">Profiles</a></li>
+          <li><a href="#memories" class="nav-link">Memories</a></li>
+          <li><a href="#favorites" class="nav-link">Favorites</a></li>
+          <li><a href="#gallery" class="nav-link">Gallery</a></li>
+          <li><button id="pwa-install-nav-btn" class="install-nav-btn">📲 Install App</button></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- PWA Installation Modal Guide -->
+    <div id="pwa-modal" class="pwa-modal">
+      <div class="pwa-modal-content glass-panel">
+        <span class="pwa-modal-close" id="pwa-modal-close">&times;</span>
+        <img src="images/Logo SH.png" alt="App Logo" class="pwa-modal-logo" />
+        <h3>Install Yair & Shwe App</h3>
+        <p> Install ပြုလုပ်ပြီး ဖုန်း Home Screen ပေါ်မှာ App တစ်ခုလို တိုက်ရိုက် အသုံးပြုနိုင်ပါတယ်။</p>
+        
+        <div id="pwa-native-box">
+          <button id="pwa-install-btn" class="pwa-action-btn">Install App Now</button>
+        </div>
+
+        <div id="pwa-ios-instructions" class="pwa-ios-instructions">
+          <p class="ios-title"><strong>iOS Safari ဖြင့် သုံးနေပါက:</strong></p>
+          <ol>
+            <li>Safari Browser အောက်ခြေရှိ <strong>Share Icon ( ⎋ / <span style="font-size:1.2rem">⇡</span> )</strong> ကို နှိပ်ပါ။</li>
+            <li>အောက်သို့ ဆွဲပြီး <strong>"Add to Home Screen" ( ➕ )</strong> ကို ရွေးပါ။</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
     <!-- Image Modal Popup -->
     <div id="image-modal" class="image-modal">
       <span class="modal-close">&times;</span>
       <img class="modal-content" id="modal-img" alt="Enlarged Memory Image" />
     </div>
+
+    <script src="script.js"></script>
   </body>
 </html>

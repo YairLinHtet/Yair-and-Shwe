@@ -275,6 +275,7 @@ body {
   opacity: 0.85;
   line-height: 1.4;
 }
+
 /* Image Modal Popup */
 .image-modal {
   display: none;
@@ -320,7 +321,6 @@ body {
   color: #72f235;
 }
 
-/* Image Clickable Cursor */
 .card-img {
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -451,7 +451,6 @@ body {
   color: #1e0322;
 }
 
-/* Expand / Collapse System */
 .expandable-content {
   display: none;
   flex-direction: column;
@@ -548,7 +547,6 @@ body {
   color: #ffffff;
 }
 
-/* Fixed Gallery Quote CSS */
 .gallery-quote {
   font-style: italic;
   font-size: 0.98rem;
@@ -576,7 +574,198 @@ body {
   margin-left: 2px;
 }
 
-/* ================= CONSOLIDATED MOBILE RESPONSIVE (< 768px) ================= */
+/* ================= FLOATING BALL & MENU ================= */
+.floating-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  user-select: none;
+  touch-action: none;
+}
+
+.floating-ball {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s;
+}
+
+.floating-ball:active {
+  cursor: grabbing;
+  transform: scale(0.92);
+}
+
+.heart-pulse-icon {
+  font-size: 26px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.floating-menu {
+  position: absolute;
+  bottom: 72px;
+  right: 0;
+  width: 190px;
+  background: rgba(30, 3, 34, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.floating-menu.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.92);
+}
+
+.floating-menu ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.floating-menu li a {
+  display: block;
+  padding: 10px 14px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 12px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.floating-menu li a:hover {
+  background: rgba(114, 242, 53, 0.2);
+  color: #72f235;
+}
+
+.install-nav-btn {
+  width: 100%;
+  text-align: left;
+  background: rgba(114, 242, 53, 0.15);
+  border: 1px solid #72f235;
+  color: #72f235;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.install-nav-btn:hover {
+  background: #72f235;
+  color: #1e0322;
+}
+
+/* ================= PWA MODAL ================= */
+.pwa-modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.pwa-modal.active {
+  display: flex;
+}
+
+.pwa-modal-content {
+  position: relative;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.pwa-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.pwa-modal-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.pwa-modal-content h3 {
+  font-size: 1.25rem;
+  color: #72f235;
+}
+
+.pwa-modal-content p {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.pwa-action-btn {
+  background: #72f235;
+  color: #1e0322;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.pwa-action-btn:hover {
+  transform: scale(1.05);
+}
+
+.pwa-ios-instructions {
+  display: none;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 12px;
+  text-align: left;
+  font-size: 0.8rem;
+}
+
+.pwa-ios-instructions ol {
+  margin-left: 18px;
+  margin-top: 6px;
+}
+
+.pwa-ios-instructions li {
+  margin-bottom: 4px;
+}
+
+/* ================= RESPONSIVE DESIGN (< 768px) ================= */
 @media (max-width: 768px) {
   body {
     padding: 16px 12px;

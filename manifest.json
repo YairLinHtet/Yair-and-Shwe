@@ -1,0 +1,21 @@
+{
+  "name": "Yair & Shwe",
+  "short_name": "Yair&Shwe",
+  "description": "Together For - Our Love Story & Memories",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1e0322",
+  "theme_color": "#3d1c47",
+  "icons": [
+    {
+      "src": "images/Logo SH.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/Logo SH.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
