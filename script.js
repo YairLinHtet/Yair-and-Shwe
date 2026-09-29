@@ -91,15 +91,19 @@ function setupImageModal() {
     });
   });
 
-  closeBtn.addEventListener("click", () => {
-    modal.classList.remove("active");
-  });
-
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
       modal.classList.remove("active");
-    }
-  });
+    });
+  }
+
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.remove("active");
+      }
+    });
+  }
 }
 
 async function loadGallery() {
@@ -153,7 +157,9 @@ function setupGalleryModal() {
 
 function toggleExpand(cardId) {
   const card = document.getElementById(cardId);
-  card.classList.toggle("expanded");
+  if (card) {
+    card.classList.toggle("expanded");
+  }
 }
 
 let currentPlayingId = null;
@@ -174,126 +180,65 @@ function toggleAudio(trackId, audioUrl) {
 
     if (prevAudio) {
       prevAudio.pause();
-      prevBtn.textContent = "▶";
-      prevProgress.style.width = "0%";
+      if (prevBtn) prevBtn.textContent = "▶";
+      if (prevProgress) prevProgress.style.width = "0%";
     }
   }
 
   if (audioElement.paused) {
     audioElement.play();
-    playBtn.textContent = "❚❚";
+    if (playBtn) playBtn.textContent = "❚❚";
     currentPlayingId = trackId;
 
     audioElement.ontimeupdate = () => {
-      const percentage =
-        (audioElement.currentTime / audioElement.duration) * 100;
-      progressBar.style.width = `${percentage}%`;
+      if (progressBar) {
+        const percentage =
+          (audioElement.currentTime / audioElement.duration) * 100;
+        progressBar.style.width = `${percentage}%`;
+      }
     };
 
     audioElement.onended = () => {
-      playBtn.textContent = "▶";
-      progressBar.style.width = "0%";
+      if (playBtn) playBtn.textContent = "▶";
+      if (progressBar) progressBar.style.width = "0%";
       currentPlayingId = null;
     };
   } else {
     audioElement.pause();
-    playBtn.textContent = "▶";
+    if (playBtn) playBtn.textContent = "▶";
     currentPlayingId = null;
   }
 }
 
-/* ================= FLOATING BALL DRAG & MENU LOGIC ================= */
-function setupFloatingBall() {
-  const widget = document.getElementById('floating-widget');
-  const ball = document.getElementById('floating-ball');
-  const menu = document.getElementById('floating-menu');
+/* ================= FLOATING WIDGET TOGGLE LOGIC ================= */
+function setupFloatingWidget() {
+  const ball = document.getElementById("floating-ball");
+  const menu = document.getElementById("floating-menu");
 
-  let isDragging = false;
-  let hasMoved = false;
-  let startX, startY, initialLeft, initialTop;
+  if (!ball || !menu) return;
 
-  ball.addEventListener('mousedown', startDrag);
-  ball.addEventListener('touchstart', startDrag, { passive: false });
+  // Prevent drag default
+  ball.addEventListener("dragstart", (e) => e.preventDefault());
 
-  function startDrag(e) {
-    isDragging = true;
-    hasMoved = false;
+  // Toggle menu smooth popup without layout shift
+  ball.addEventListener("click", (e) => {
+    e.stopPropagation();
+    menu.classList.toggle("hidden");
+  });
 
-    const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-    const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-
-    startX = clientX;
-    startY = clientY;
-
-    const rect = widget.getBoundingClientRect();
-    initialLeft = rect.left;
-    initialTop = rect.top;
-
-    document.addEventListener('mousemove', onDrag);
-    document.addEventListener('touchmove', onDrag, { passive: false });
-    document.addEventListener('mouseup', stopDrag);
-    document.addEventListener('touchend', stopDrag);
-  }
-
-  function onDrag(e) {
-    if (!isDragging) return;
-
-    const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-    const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
-
-    const deltaX = clientX - startX;
-    const deltaY = clientY - startY;
-
-    if (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5) {
-      hasMoved = true;
-    }
-
-    if (hasMoved) {
-      e.preventDefault();
-
-      let newLeft = initialLeft + deltaX;
-      let newTop = initialTop + deltaY;
-
-      const padding = 10;
-      const maxLeft = window.innerWidth - widget.offsetWidth - padding;
-      const maxTop = window.innerHeight - widget.offsetHeight - padding;
-
-      newLeft = Math.max(padding, Math.min(newLeft, maxLeft));
-      newTop = Math.max(padding, Math.min(newTop, maxTop));
-
-      widget.style.bottom = 'auto';
-      widget.style.right = 'auto';
-      widget.style.left = `${newLeft}px`;
-      widget.style.top = `${newTop}px`;
-    }
-  }
-
-  function stopDrag() {
-    if (!isDragging) return;
-    isDragging = false;
-
-    document.removeEventListener('mousemove', onDrag);
-    document.removeEventListener('touchmove', onDrag);
-    document.removeEventListener('mouseup', stopDrag);
-    document.removeEventListener('touchend', stopDrag);
-  }
-
-  ball.addEventListener('click', () => {
-    if (!hasMoved) {
-      menu.classList.toggle('hidden');
+  // Close menu when clicking outside
+  document.addEventListener("click", (e) => {
+    const widget = document.getElementById("floating-widget");
+    if (widget && !widget.contains(e.target)) {
+      menu.classList.add("hidden");
     }
   });
 
-  document.querySelectorAll('.nav-link').forEach((link) => {
-    link.addEventListener('click', () => {
-      menu.classList.add('hidden');
+  // Close menu when a navigation link is clicked
+  document.querySelectorAll(".floating-menu a").forEach((link) => {
+    link.addEventListener("click", () => {
+      menu.classList.add("hidden");
     });
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!widget.contains(e.target)) {
-      menu.classList.add('hidden');
-    }
   });
 }
 
@@ -301,69 +246,89 @@ function setupFloatingBall() {
 let deferredPrompt = null;
 
 function setupPWA() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-      .then(() => console.log('Service Worker Registered successfully.'))
-      .catch((err) => console.error('Service Worker Registration failed:', err));
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("./sw.js")
+      .then((reg) => {
+        console.log("Service Worker Registered successfully.");
+        reg.update(); // Forces immediate update check
+      })
+      .catch((err) =>
+        console.error("Service Worker Registration failed:", err),
+      );
   }
 
-  const pwaModal = document.getElementById('pwa-modal');
-  const pwaModalClose = document.getElementById('pwa-modal-close');
-  const pwaInstallNavBtn = document.getElementById('pwa-install-nav-btn');
-  const pwaInstallBtn = document.getElementById('pwa-install-btn');
-  const pwaNativeBox = document.getElementById('pwa-native-box');
-  const pwaIosInstructions = document.getElementById('pwa-ios-instructions');
+  const pwaModal = document.getElementById("pwa-modal");
+  const pwaModalClose = document.getElementById("pwa-modal-close");
+  const pwaInstallNavBtn = document.getElementById("pwa-install-nav-btn");
+  const pwaInstallBtn = document.getElementById("pwa-install-btn");
+  const pwaNativeBox = document.getElementById("pwa-native-box");
+  const pwaIosInstructions = document.getElementById("pwa-ios-instructions");
 
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
-  window.addEventListener('beforeinstallprompt', (e) => {
+  window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
   });
 
-  pwaInstallNavBtn.addEventListener('click', () => {
-    document.getElementById('floating-menu').classList.add('hidden');
-    pwaModal.classList.add('active');
+  if (pwaInstallNavBtn) {
+    pwaInstallNavBtn.addEventListener("click", () => {
+      const menu = document.getElementById("floating-menu");
+      if (menu) menu.classList.add("hidden");
+      if (pwaModal) pwaModal.classList.add("active");
 
-    if (deferredPrompt) {
-      pwaNativeBox.style.display = 'block';
-      pwaIosInstructions.style.display = 'none';
-    } else if (isIOS) {
-      pwaNativeBox.style.display = 'none';
-      pwaIosInstructions.style.display = 'block';
-    } else {
-      pwaNativeBox.style.display = 'block';
-      pwaIosInstructions.style.display = 'none';
-    }
-  });
+      if (deferredPrompt) {
+        if (pwaNativeBox) pwaNativeBox.style.display = "block";
+        if (pwaIosInstructions) pwaIosInstructions.style.display = "none";
+      } else if (isIOS) {
+        if (pwaNativeBox) pwaNativeBox.style.display = "none";
+        if (pwaIosInstructions) pwaIosInstructions.style.display = "block";
+      } else {
+        if (pwaNativeBox) pwaNativeBox.style.display = "block";
+        if (pwaIosInstructions) pwaIosInstructions.style.display = "none";
+      }
+    });
+  }
 
-  pwaInstallBtn.addEventListener('click', async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log(`User prompt outcome: ${outcome}`);
-      deferredPrompt = null;
-      pwaModal.classList.remove('active');
-    } else {
-      alert('Browser မူလ Install Prompt အဆင်မသင့်ပါက Browser Menu ထဲရှိ "Add to Home Screen" ကို အသုံးပြုပေးပါ။');
-    }
-  });
+  if (pwaInstallBtn) {
+    pwaInstallBtn.addEventListener("click", async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User prompt outcome: ${outcome}`);
+        deferredPrompt = null;
+        if (pwaModal) pwaModal.classList.remove("active");
+      } else {
+        alert(
+          'Browser မူလ Install Prompt အဆင်မသင့်ပါက Browser Menu ထဲရှိ "Add to Home Screen" ကို အသုံးပြုပေးပါ။',
+        );
+      }
+    });
+  }
 
-  pwaModalClose.addEventListener('click', () => {
-    pwaModal.classList.remove('active');
-  });
+  if (pwaModalClose) {
+    pwaModalClose.addEventListener("click", () => {
+      if (pwaModal) pwaModal.classList.remove("active");
+    });
+  }
 
-  pwaModal.addEventListener('click', (e) => {
-    if (e.target === pwaModal) {
-      pwaModal.classList.remove('active');
-    }
-  });
+  if (pwaModal) {
+    pwaModal.addEventListener("click", (e) => {
+      if (e.target === pwaModal) {
+        pwaModal.classList.remove("active");
+      }
+    });
+  }
 }
 
 // Run initializations
-updateCounter();
-setInterval(updateCounter, 1000);
-loadMemories();
-loadGallery();
-setupFloatingBall();
-setupPWA();
+document.addEventListener("DOMContentLoaded", () => {
+  updateCounter();
+  setInterval(updateCounter, 1000);
+  loadMemories();
+  loadGallery();
+  setupFloatingWidget();
+  setupPWA();
+});

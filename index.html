@@ -6,14 +6,17 @@
     <title>Yair & Shwe</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" type="image/png" href="images/Logo SH.png" />
-    
+    <link rel="icon" type="image/png" href="images/Logo%20SH.png" />
     <!-- PWA Configurations -->
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#3d1c47" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="apple-mobile-web-app-title" content="Yair & Shwe" />
-    <link rel="apple-touch-icon" href="images/Logo SH.png" />
+    <link rel="icon" type="image/png" href="images/Logo%20SH.png" />
   </head>
   <body>
     <main class="glass-container">
@@ -92,7 +95,7 @@
             <div class="list-item"><span>BIG HERO 6 (2014)</span></div>
             <div class="list-item"><span>YOUR NAME (2016)</span></div>
             <div class="list-item"><span>WEATHERING WITH YOU (2019)</span></div>
-            <!-- Hidden Items (shown on expand) -->
+            <!-- Hidden Items -->
             <div class="expandable-content">
               <div class="list-item"><span>SUZUME (2022)</span></div>
               <div class="list-item"><span>A SILENT VOICE (2016)</span></div>
@@ -282,22 +285,28 @@
       </section>
     </main>
 
-    <!-- iOS Glassmorphism Draggable Floating Ball Navigation -->
-    <div id="floating-widget" class="floating-widget">
-      <button id="floating-ball" class="floating-ball" aria-label="Open Navigation">
-        <span class="heart-pulse-icon">💖</span>
-      </button>
-
-      <nav id="floating-menu" class="floating-menu hidden">
+    <!-- Fixed Floating Ball Navigation -->
+    <div id="floating-widget">
+      <!-- Menu placed FIRST so flex column displays it above the ball -->
+      <div id="floating-menu" class="floating-menu hidden" draggable="false">
         <ul>
           <li><a href="#hero" class="nav-link">Home</a></li>
           <li><a href="#profiles" class="nav-link">Profiles</a></li>
           <li><a href="#memories" class="nav-link">Memories</a></li>
           <li><a href="#favorites" class="nav-link">Favorites</a></li>
           <li><a href="#gallery" class="nav-link">Gallery</a></li>
-          <li><button id="pwa-install-nav-btn" class="install-nav-btn">📲 Install App</button></li>
+          <li>
+            <button id="pwa-install-nav-btn" class="install-nav-btn">
+              📲 <span>Install App</span>
+            </button>
+          </li>
         </ul>
-      </nav>
+      </div>
+
+      <!-- Ball placed SECOND -->
+      <div id="floating-ball" class="floating-ball">
+        <span class="heart-pulse-icon">💖</span>
+      </div>
     </div>
 
     <!-- PWA Installation Modal Guide -->
@@ -306,17 +315,32 @@
         <span class="pwa-modal-close" id="pwa-modal-close">&times;</span>
         <img src="images/Logo SH.png" alt="App Logo" class="pwa-modal-logo" />
         <h3>Install Yair & Shwe App</h3>
-        <p> Install ပြုလုပ်ပြီး ဖုန်း Home Screen ပေါ်မှာ App တစ်ခုလို တိုက်ရိုက် အသုံးပြုနိုင်ပါတယ်။</p>
-        
+        <p>
+          Install ပြုလုပ်ပြီး ဖုန်း Home Screen ပေါ်မှာ App တစ်ခုလို တိုက်ရိုက်
+          အသုံးပြုနိုင်ပါတယ်။
+        </p>
+
         <div id="pwa-native-box">
-          <button id="pwa-install-btn" class="pwa-action-btn">Install App Now</button>
+          <button id="pwa-install-btn" class="pwa-action-btn">
+            Install App Now
+          </button>
         </div>
 
         <div id="pwa-ios-instructions" class="pwa-ios-instructions">
           <p class="ios-title"><strong>iOS Safari ဖြင့် သုံးနေပါက:</strong></p>
           <ol>
-            <li>Safari Browser အောက်ခြေရှိ <strong>Share Icon ( ⎋ / <span style="font-size:1.2rem">⇡</span> )</strong> ကို နှိပ်ပါ။</li>
-            <li>အောက်သို့ ဆွဲပြီး <strong>"Add to Home Screen" ( ➕ )</strong> ကို ရွေးပါ။</li>
+            <li>
+              Safari Browser အောက်ခြေရှိ
+              <strong
+                >Share Icon ( ⎋ /
+                <span style="font-size: 1.2rem">⇡</span> )</strong
+              >
+              ကို နှိပ်ပါ။
+            </li>
+            <li>
+              အောက်သို့ ဆွဲပြီး <strong>"Add to Home Screen" ( ➕ )</strong> ကို
+              ရွေးပါ။
+            </li>
           </ol>
         </div>
       </div>
