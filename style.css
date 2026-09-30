@@ -585,13 +585,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 12px;
+  pointer-events: none; /* FIX 1: Allow clicks to pass through empty widget areas */
 }
 
-/* Floating Menu Container - (Placed on TOP using order: 1) */
+/* Floating Menu Container */
 .floating-menu {
-  order: 1;
-  position: relative !important;
+  position: absolute !important; /* FIX 2: Remove from layout flow so it doesn't block screen space when hidden */
+  bottom: 72px; /* Placed right above the 60px ball */
+  right: 0;
   width: 190px;
   max-width: 80vw;
   background: rgba(30, 3, 34, 0.95);
@@ -602,7 +603,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
 
-  /* Animation Origin points to the Heart Icon at bottom right */
   transform-origin: bottom right;
   transition:
     opacity 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275),
@@ -611,20 +611,19 @@ body {
   opacity: 1;
   transform: translateY(0) scale(1);
   visibility: visible;
+  pointer-events: auto; /* FIX 3: Enable clicks when menu is open */
 }
 
 /* Hidden Menu State */
 .floating-menu.hidden {
   opacity: 0 !important;
   transform: translateY(10px) scale(0.92) !important;
-  pointer-events: none !important;
+  pointer-events: none !important; /* FIX 4: Ignore all clicks when hidden */
   visibility: hidden !important;
-  display: block !important; /* Keeps transition active */
 }
 
-/* Floating Heart Ball - (Placed on BOTTOM using order: 2) */
+/* Floating Heart Ball */
 .floating-ball {
-  order: 2;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -642,6 +641,7 @@ body {
     background 0.2s ease;
   user-select: none;
   flex-shrink: 0;
+  pointer-events: auto; /* FIX 5: Keep heart ball interactive */
 }
 
 .floating-ball:hover {

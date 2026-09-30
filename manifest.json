@@ -10,13 +10,13 @@
   "theme_color": "#3d1c47",
   "icons": [
     {
-      "src": "images/Logo%20SH.png",
+      "src": "images/sh-logo.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "images/Logo%20SH.png",
+      "src": "images/sh-logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
