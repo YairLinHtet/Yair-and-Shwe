@@ -1,10 +1,11 @@
-const CACHE_NAME = "yair-shwe-v2";
+const CACHE_NAME = "yair-shwe-v3";
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
   "./style.css",
   "./script.js",
-  "./images/Logo%20SH.png",
+  "./manifest.json",
+  "./images/sh-logo.png",
 ];
 
 self.addEventListener("install", (event) => {
@@ -31,7 +32,6 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// Network-First strategy: Always fetch latest code updates automatically
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
