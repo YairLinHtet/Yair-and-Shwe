@@ -28,9 +28,10 @@
     <main class="glass-container">
       <!-- Header with Image Logo -->
       <header class="header">
-        <div class="logo-box">
+        <a class="logo-box" href="index.html">
           <img src="images/sh-logo.png" alt="Logo" class="site-logo" />
-        </div>
+        </a>
+
         <div class="profile-pics">
           <div class="circle-avatar">
             <img
@@ -48,9 +49,12 @@
       <section class="hero-card glass-panel" id="hero">
         <h2>Together For</h2>
 
-        <!-- Two-row timer layout -->
+        <!-- timer layout -->
         <div id="together-counter" class="timer-display">
           <div id="date-row" class="timer-row primary-row">Loading...</div>
+          <div id="total-days-row" class="timer-row total-days-row">
+            (0 Days)
+          </div>
           <div id="time-row" class="timer-row secondary-row">00:00:00</div>
         </div>
 
@@ -93,41 +97,46 @@
       </section>
 
       <!-- Favorites Grid Section -->
-      <section class="favorites-grid" id="favorites">
-        <!-- FAVOURITE MOVIES -->
-        <div class="fav-card glass-panel" id="fav-movies">
-          <h3>FAVOURITE MOVIES</h3>
-          <div class="fav-list-container" id="fav-movies-list"></div>
-          <button class="arrow-btn" onclick="toggleExpand('fav-movies')">
-            <span class="arrow-down">▼</span>
-          </button>
+      <section>
+        <div class="section-title fav-title">
+          <h2>OUR FAVOURITES</h2>
         </div>
+        <div class="favorites-grid" id="favorites">
+          <!-- FAVOURITE MOVIES -->
+          <div class="fav-card glass-panel" id="fav-movies">
+            <h3>FAVOURITE MOVIES</h3>
+            <div class="fav-list-container" id="fav-movies-list"></div>
+            <button class="arrow-btn" onclick="toggleExpand('fav-movies')">
+              <span class="arrow-down">▼</span>
+            </button>
+          </div>
 
-        <!-- FAVOURITE SERIES -->
-        <div class="fav-card glass-panel" id="fav-series">
-          <h3>FAVOURITE SERIES</h3>
-          <div class="fav-list-container" id="fav-series-list"></div>
-          <button class="arrow-btn" onclick="toggleExpand('fav-series')">
-            <span class="arrow-down">▼</span>
-          </button>
-        </div>
+          <!-- FAVOURITE SERIES -->
+          <div class="fav-card glass-panel" id="fav-series">
+            <h3>FAVOURITE SERIES</h3>
+            <div class="fav-list-container" id="fav-series-list"></div>
+            <button class="arrow-btn" onclick="toggleExpand('fav-series')">
+              <span class="arrow-down">▼</span>
+            </button>
+          </div>
 
-        <!-- FAVOURITE CHARACTERS -->
-        <div class="fav-card glass-panel" id="fav-characters">
-          <h3>FAVOURITE CHARACTERS</h3>
-          <div class="fav-list-container" id="fav-characters-list"></div>
-          <button class="arrow-btn" onclick="toggleExpand('fav-characters')">
-            <span class="arrow-down">▼</span>
-          </button>
-        </div>
+          <!-- FAVOURITE CHARACTERS -->
+          <div class="fav-card glass-panel" id="fav-characters">
+            <h3>FAVOURITE CHARACTERS</h3>
+            <div class="fav-list-container" id="fav-characters-list"></div>
+            <button class="arrow-btn" onclick="toggleExpand('fav-characters')">
+              <span class="arrow-down">▼</span>
+            </button>
+          </div>
 
-        <!-- OUR PLAYLIST -->
-        <div class="fav-card glass-panel" id="fav-playlist">
-          <h3>OUR PLAYLIST</h3>
-          <div class="fav-list-container" id="fav-playlist-list"></div>
-          <button class="arrow-btn" onclick="toggleExpand('fav-playlist')">
-            <span class="arrow-down">▼</span>
-          </button>
+          <!-- OUR PLAYLIST -->
+          <div class="fav-card glass-panel" id="fav-playlist">
+            <h3>OUR PLAYLIST</h3>
+            <div class="fav-list-container" id="fav-playlist-list"></div>
+            <button class="arrow-btn" onclick="toggleExpand('fav-playlist')">
+              <span class="arrow-down">▼</span>
+            </button>
+          </div>
         </div>
       </section>
 

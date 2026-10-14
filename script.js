@@ -4,16 +4,23 @@ const startDate = new Date(2026, 6, 10);
 function updateCounter() {
   const now = new Date();
   const dateRow = document.getElementById("date-row");
+  const totalDaysRow = document.getElementById("total-days-row");
   const timeRow = document.getElementById("time-row");
 
   if (now < startDate) {
     const diffTime = Math.abs(startDate - now);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     dateRow.textContent = `Starts in ${diffDays} Days!`;
+    if (totalDaysRow) totalDaysRow.textContent = `(0 Days)`;
     timeRow.textContent = `00:00:00`;
     return;
   }
 
+  // Calculate total elapsed days
+  const diffTime = now - startDate;
+  const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  // Calculate Years, Months, Days
   let years = now.getFullYear() - startDate.getFullYear();
   let months = now.getMonth() - startDate.getMonth();
   let days = now.getDate() - startDate.getDate();
@@ -37,6 +44,10 @@ function updateCounter() {
     dateRow.textContent = `${years} Year${years > 1 ? "s" : ""} ${months} Month${months !== 1 ? "s" : ""} ${days} Day${days !== 1 ? "s" : ""}`;
   } else {
     dateRow.textContent = `${months} Month${months !== 1 ? "s" : ""} ${days} Day${days !== 1 ? "s" : ""}`;
+  }
+
+  if (totalDaysRow) {
+    totalDaysRow.textContent = `(${totalDays} Days)`;
   }
 
   timeRow.textContent = `${hours} : ${minutes} : ${seconds}`;
@@ -393,8 +404,8 @@ function createMediaHTML(item) {
     <div class="media-item">
       <img src="${item.cover}" alt="${item.title}" class="item-cover" />
       <div class="media-info">
-        <span style="font-size:0.5rem;" class="title">${item.title}</span>
-        <span class="year">(${item.year})</span>
+        <span class="title">${item.title}</span>
+        <span style="font-size: clamp(0.5rem, 0.357rem + 0.714vw, 1rem);" class="year">(${item.year})</span>
       </div>
     </div>
   `;
@@ -404,7 +415,8 @@ function createCharHTML(item) {
   return `
     <div class="char-info">
       <img src="${item.avatar}" alt="${item.name}" class="avatar-img" />
-      <span>${item.name}</span>
+      <!--change font size for character-->
+      <span style="font-size:clamp(0.7rem, 0.614rem + 0.429vw, 1rem); " >${item.name}</span>
     </div>
   `;
 }
@@ -414,8 +426,9 @@ function createTrackHTML(item) {
     <div class="playlist-item" id="track-${item.id}">
       <img src="${item.cover}" alt="${item.title}" class="album-art" />
       <div class="track-info">
-        <span style="font-size:1rem;" class="song-title">${item.title}</span>
-        <span style="font-size:0.4rem;" class="artist-name">${item.artist}</span>
+      <!--change font size for play-->
+        <span  class="song-title">${item.title}</span>
+        <span  class="artist-name">${item.artist}</span>
         <div class="progress-bar-container">
           <div class="progress-bar" id="progress-${item.id}"></div>
         </div>

@@ -43,6 +43,7 @@ body {
 
 /* ================= HEADER & LOGO ================= */
 .header {
+  position: sticky;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -104,6 +105,14 @@ body {
   font-weight: 800;
   letter-spacing: 1.5px;
   color: #ffffff;
+}
+.total-days-row {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 1px;
+  margin-top: -4px;
+  margin-block: 0.5rem;
 }
 
 .secondary-row {
@@ -210,8 +219,12 @@ body {
   color: #72f235;
   font-size: 1.4rem;
   text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
-
+.fav-title {
+  margin-bottom: 2rem;
+}
 .memories-scroll-container {
   display: flex;
   gap: 20px;
@@ -376,7 +389,7 @@ body {
 }
 
 .fav-card h3 {
-  font-size: 1.2rem;
+  font-size: clamp(0.9rem, 0.814rem + 0.429vw, 1.2rem);
   letter-spacing: 2px;
   color: #ffffff;
   text-transform: uppercase;
@@ -450,8 +463,6 @@ body {
   border-color: rgba(255, 255, 255, 0.25);
 }
 
-
-
 .media-info,
 .track-info {
   flex: 1;
@@ -463,7 +474,7 @@ body {
 
 .media-info .title,
 .track-info .song-title {
-  font-size: 1rem;
+  font-size: clamp(0.7rem, 0.614rem + 0.429vw, 1rem);
   font-weight: 600;
   color: #ffffff;
   white-space: nowrap;
@@ -473,7 +484,7 @@ body {
 
 .media-info .year,
 .track-info .artist-name {
-  font-size: 0.85rem;
+  font-size: clamp(0.5rem, 0.386rem + 0.571vw, 0.9rem);
   color: rgba(255, 255, 255, 0.65);
   margin-top: 3px;
   white-space: nowrap;
@@ -629,7 +640,7 @@ body {
   color: rgba(255, 255, 255, 0.9);
   position: relative;
   padding-left: 16px;
-  border-left: 3px solid #72f235;
+  text-align: left;
   quotes: "“" "”";
 }
 
@@ -902,6 +913,9 @@ body {
 
   .primary-row {
     font-size: 1.8rem;
+  }
+  .total-days-row {
+    font-size: 1rem;
   }
 
   .secondary-row {
