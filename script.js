@@ -162,13 +162,17 @@ function toggleExpand(cardId) {
   }
 }
 
+// Declare active track state globally
 let currentPlayingId = null;
 
-function toggleAudio(trackId, audioUrl) {
+function toggleAudio(trackId) {
   const audioElement = document.getElementById(`audio-${trackId}`);
   const playBtn = document.querySelector(`#track-${trackId} .play-btn`);
   const progressBar = document.getElementById(`progress-${trackId}`);
 
+  if (!audioElement) return;
+
+  // Stop currently playing track if switching to a new track
   if (currentPlayingId && currentPlayingId !== trackId) {
     const prevAudio = document.getElementById(`audio-${currentPlayingId}`);
     const prevBtn = document.querySelector(
@@ -180,29 +184,37 @@ function toggleAudio(trackId, audioUrl) {
 
     if (prevAudio) {
       prevAudio.pause();
-      if (prevBtn) prevBtn.textContent = "▶";
-      if (prevProgress) prevProgress.style.width = "0%";
+      prevAudio.currentTime = 0; // Reset position to match progress bar reset
     }
+    if (prevBtn) prevBtn.textContent = "▶";
+    if (prevProgress) prevProgress.style.width = "0%";
   }
 
-  if (audioElement.paused) {
-    audioElement.play();
-    if (playBtn) playBtn.textContent = "❚❚";
-    currentPlayingId = trackId;
-
-    audioElement.ontimeupdate = () => {
-      if (progressBar) {
+  // Attach event listeners once per audio element
+  if (!audioElement.dataset.listenersAttached) {
+    audioElement.addEventListener("timeupdate", () => {
+      if (progressBar && audioElement.duration) {
         const percentage =
           (audioElement.currentTime / audioElement.duration) * 100;
         progressBar.style.width = `${percentage}%`;
       }
-    };
+    });
 
-    audioElement.onended = () => {
+    audioElement.addEventListener("ended", () => {
       if (playBtn) playBtn.textContent = "▶";
       if (progressBar) progressBar.style.width = "0%";
+      audioElement.currentTime = 0;
       currentPlayingId = null;
-    };
+    });
+
+    audioElement.dataset.listenersAttached = "true";
+  }
+
+  // Toggle Play / Pause
+  if (audioElement.paused) {
+    audioElement.play();
+    if (playBtn) playBtn.textContent = "❚❚";
+    currentPlayingId = trackId;
   } else {
     audioElement.pause();
     if (playBtn) playBtn.textContent = "▶";
@@ -323,11 +335,103 @@ function setupPWA() {
   }
 }
 
+async function loadFavorites() {
+  try {
+    const response = await fetch("favorites.json");
+    const data = await response.json();
+
+    // Load Movies
+    renderMediaCategory("fav-movies-list", data.movies);
+
+    // Load Series
+    renderMediaCategory("fav-series-list", data.series);
+
+    // Load Characters
+    const charContainer = document.getElementById("fav-characters-list");
+    if (charContainer && data.characters) {
+      const visible = data.characters.slice(0, 3);
+      const hidden = data.characters.slice(3);
+      let html = visible.map((c) => createCharHTML(c)).join("");
+      if (hidden.length > 0) {
+        html += `<div class="expandable-content">${hidden.map((c) => createCharHTML(c)).join("")}</div>`;
+      }
+      charContainer.innerHTML = html;
+    }
+
+    // Load Playlist
+    const playlistContainer = document.getElementById("fav-playlist-list");
+    if (playlistContainer && data.playlist) {
+      const visible = data.playlist.slice(0, 3);
+      const hidden = data.playlist.slice(3);
+      let html = visible.map((t) => createTrackHTML(t)).join("");
+      if (hidden.length > 0) {
+        html += `<div class="expandable-content">${hidden.map((t) => createTrackHTML(t)).join("")}</div>`;
+      }
+      playlistContainer.innerHTML = html;
+    }
+  } catch (error) {
+    console.error("Error loading favorites JSON:", error);
+  }
+}
+
+function renderMediaCategory(containerId, items) {
+  const container = document.getElementById(containerId);
+  if (!container || !items) return;
+
+  const visible = items.slice(0, 3);
+  const hidden = items.slice(3);
+
+  let html = visible.map((item) => createMediaHTML(item)).join("");
+  if (hidden.length > 0) {
+    html += `<div class="expandable-content">${hidden.map((item) => createMediaHTML(item)).join("")}</div>`;
+  }
+  container.innerHTML = html;
+}
+
+function createMediaHTML(item) {
+  return `
+    <div class="media-item">
+      <img src="${item.cover}" alt="${item.title}" class="item-cover" />
+      <div class="media-info">
+        <span style="font-size:0.5rem;" class="title">${item.title}</span>
+        <span class="year">(${item.year})</span>
+      </div>
+    </div>
+  `;
+}
+
+function createCharHTML(item) {
+  return `
+    <div class="char-info">
+      <img src="${item.avatar}" alt="${item.name}" class="avatar-img" />
+      <span>${item.name}</span>
+    </div>
+  `;
+}
+
+function createTrackHTML(item) {
+  return `
+    <div class="playlist-item" id="track-${item.id}">
+      <img src="${item.cover}" alt="${item.title}" class="album-art" />
+      <div class="track-info">
+        <span style="font-size:1rem;" class="song-title">${item.title}</span>
+        <span style="font-size:0.4rem;" class="artist-name">${item.artist}</span>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progress-${item.id}"></div>
+        </div>
+      </div>
+      <button class="play-btn" onclick="toggleAudio(${item.id})">▶</button>
+      <audio id="audio-${item.id}" src="${item.src}"></audio>
+    </div>
+  `;
+}
+
 // Run initializations
 document.addEventListener("DOMContentLoaded", () => {
   updateCounter();
   setInterval(updateCounter, 1000);
   loadMemories();
+  loadFavorites();
   loadGallery();
   setupFloatingWidget();
   setupPWA();

@@ -1,0 +1,104 @@
+{
+  "movies": [
+    {
+      "title": "BIG HERO 6",
+      "year": "2014",
+      "cover": "https://disney.images.edge.bamgrid.com/ripcut-delivery/v2/variant/disney/09c05aab-e3b9-4115-8ae0-d303bbf5de75/compose?format=webp&width=2560"
+    },
+    {
+      "title": "YOUR NAME",
+      "year": "2016",
+      "cover": "images/movies/your-name.jpg"
+    },
+    {
+      "title": "WEATHERING WITH YOU",
+      "year": "2019",
+      "cover": "images/movies/weathering-with-you.jpg"
+    },
+    {
+      "title": "SUZUME",
+      "year": "2022",
+      "cover": "images/movies/suzume.jpg"
+    },
+    {
+      "title": "A SILENT VOICE",
+      "year": "2016",
+      "cover": "images/movies/a-silent-voice.jpg"
+    }
+  ],
+  "series": [
+    {
+      "title": "ARCANE",
+      "year": "2021",
+      "cover": "images/series/arcane.jpg"
+    },
+    {
+      "title": "ATLA",
+      "year": "2005",
+      "cover": "images/series/atla.jpg"
+    },
+    {
+      "title": "STRANGER THINGS",
+      "year": "2016",
+      "cover": "images/series/stranger-things.jpg"
+    },
+    {
+      "title": "FIRST LOVE",
+      "year": "2022",
+      "cover": "images/series/first-love.jpg"
+    },
+    {
+      "title": "LOKI",
+      "year": "2021",
+      "cover": "images/series/loki.jpg"
+    }
+  ],
+  "characters": [
+    {
+      "name": "Baymax (Big Hero 6)",
+      "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWXsq2-Fm8ZwIPxgKcDJ9DlijZXA0SRiACLmAQFnzg_A&s=10"
+    },
+    {
+      "name": "Toothless (HTTYD)",
+      "avatar": "images/characters/toothless.jpg"
+    },
+    {
+      "name": "Wall-E (Wall-E)",
+      "avatar": "images/characters/wall-e.jpg"
+    },
+    {
+      "name": "Groot (GOTG)",
+      "avatar": "images/characters/groot.jpg"
+    }
+  ],
+  "playlist": [
+    {
+      "id": 1,
+      "title": "ကမ္ဘာအဆက်ဆက်",
+      "artist": "Bunny Phyoe ft. Amera Hpone",
+      "cover": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHaL0LX-34t40IwdC0053zO-LsDD-NP3Li3GrX58fpKA&s=10",
+      "src": "music/ကမ္ဘာအဆက်ဆက် - Bunny Phyoe ft.Amera Hpone"
+    },
+    {
+      "id": 2,
+      "title": "Song Title 2",
+      "artist": "Artist Name",
+      "cover": "images/playlist/cover2.jpg",
+      "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+    },
+    {
+      "id": 3,
+      "title": "Song Title 3",
+      "artist": "Artist Name",
+      "cover": "images/playlist/cover3.jpg",
+      "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+    },
+    {
+      "id": 4,
+      "title": "Song Title 4",
+      "artist": "Artist Name",
+      "cover": "images/playlist/cover4.jpg",
+      "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+    }
+  ]
+}

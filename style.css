@@ -18,6 +18,8 @@ body {
   justify-content: center;
   align-items: center;
   padding: 20px;
+  overflow-x: hidden; /* Mobile Horizontal Overflow Fix */
+  width: 100%;
 }
 
 /* ================= CONTAINERS & PANELS ================= */
@@ -344,80 +346,148 @@ body {
 /* ================= FAVORITES GRID ================= */
 .favorites-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .fav-card {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   align-items: center;
   text-align: center;
-  padding: 28px 24px;
+  padding: 32px 28px;
   position: relative;
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  backdrop-filter: blur(12px);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.fav-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
 .fav-card h3 {
-  font-size: 1rem;
-  letter-spacing: 1px;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
   color: #ffffff;
+  text-transform: uppercase;
+  margin-bottom: 4px;
 }
 
 .fav-list-container {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 
-.list-item {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 12px;
-  border-radius: 14px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.char-info {
-  width: 100%;
+/* Image Styling */
+.item-cover,
+.avatar-img,
+.album-art {
+  object-fit: cover;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  overflow: hidden;
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 0.85rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 8px 12px;
-  border-radius: 14px;
+  justify-content: center;
+  text-align: center;
 }
 
+.item-cover {
+  width: 65px;
+  height: 88px;
+  border-radius: 10px;
+}
+
+.avatar-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.album-art {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+}
+
+/* List Item Container */
+.media-item,
+.char-info,
 .playlist-item {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 0.8rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 8px 12px;
-  border-radius: 14px;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 10px 14px;
+  border-radius: 18px;
+  box-sizing: border-box;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
+.media-item:hover,
+.char-info:hover,
+.playlist-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+
+
+.media-info,
 .track-info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   text-align: left;
+  min-width: 0;
 }
 
+.media-info .title,
+.track-info .song-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.media-info .year,
+.track-info .artist-name {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Audio Progress Bar */
 .progress-bar-container {
   width: 100%;
-  height: 4px;
+  height: 5px;
   background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  margin-top: 6px;
+  border-radius: 6px;
+  margin-top: 8px;
   overflow: hidden;
 }
 
@@ -428,21 +498,24 @@ body {
   transition: width 0.1s linear;
 }
 
+/* Play Button */
 .play-btn {
   background: rgba(114, 242, 53, 0.2);
   border: 1px solid #72f235;
   color: #72f235;
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  font-size: 0.85rem;
+  font-size: 1rem;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   transition:
     transform 0.2s ease,
-    background 0.2s ease;
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .play-btn:hover {
@@ -451,10 +524,11 @@ body {
   color: #1e0322;
 }
 
+/* Expandable Content */
 .expandable-content {
   display: none;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 
 .fav-card.expanded .expandable-content {
@@ -465,11 +539,12 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
+  margin-top: 6px;
 }
 
 .arrow-down {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: #72f235;
   display: inline-block;
   transition: transform 0.3s ease;
@@ -585,13 +660,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  pointer-events: none; /* FIX 1: Allow clicks to pass through empty widget areas */
+  pointer-events: none;
 }
 
 /* Floating Menu Container */
 .floating-menu {
-  position: absolute !important; /* FIX 2: Remove from layout flow so it doesn't block screen space when hidden */
-  bottom: 72px; /* Placed right above the 60px ball */
+  position: absolute !important;
+  bottom: 72px;
   right: 0;
   width: 190px;
   max-width: 80vw;
@@ -611,14 +686,14 @@ body {
   opacity: 1;
   transform: translateY(0) scale(1);
   visibility: visible;
-  pointer-events: auto; /* FIX 3: Enable clicks when menu is open */
+  pointer-events: auto;
 }
 
 /* Hidden Menu State */
 .floating-menu.hidden {
   opacity: 0 !important;
   transform: translateY(10px) scale(0.92) !important;
-  pointer-events: none !important; /* FIX 4: Ignore all clicks when hidden */
+  pointer-events: none !important;
   visibility: hidden !important;
 }
 
@@ -641,7 +716,7 @@ body {
     background 0.2s ease;
   user-select: none;
   flex-shrink: 0;
-  pointer-events: auto; /* FIX 5: Keep heart ball interactive */
+  pointer-events: auto;
 }
 
 .floating-ball:hover {
@@ -807,12 +882,13 @@ body {
 /* ================= RESPONSIVE DESIGN (< 768px) ================= */
 @media (max-width: 768px) {
   body {
-    padding: 16px 12px;
+    padding: 12px 8px;
   }
 
   .glass-container {
     max-width: 100%;
     gap: 20px;
+    overflow: hidden;
   }
 
   .glass-panel {
@@ -861,7 +937,7 @@ body {
 
   .favorites-grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
   }
 
   .fav-card {
@@ -872,6 +948,11 @@ body {
     min-width: 240px;
     max-width: 240px;
     padding: 16px;
+  }
+
+  .memories-scroll-container {
+    width: 100%;
+    padding: 10px 0;
   }
 
   .gallery-card {
@@ -893,4 +974,7 @@ body {
   .gallery-quote {
     font-size: 0.88rem;
   }
+}
+
+@media (max-width: 400px) {
 }

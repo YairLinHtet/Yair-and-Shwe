@@ -1,13 +1,23 @@
 [
   {
     "title": "First Date Memories",
-    "quote": "Every moment spent with you feels like a dream I never want to wake up from.",
+    "quote": "ပထမဆုံး ချိန်းတွေ့တဲ့ရက်လေးမှာ နှစ်ယောက်တူတူ Selfie ရိုက်ဖို့ ရှက်နေတာနဲ့ပဲ... ဒီလိုလေး လက်ကလေးဆုပ်ကိုင်ထားတဲ့ ပုံလေးပဲ ရိုက်ဖြစ်ခဲ့ကြတာ။",
     "image": "images/1st date photo.jpg"
   },
   {
-    "title": "Sweet Moments Together",
-    "quote": "In your smile, I see something more beautiful than the stars.",
+    "title": "Second Date Memories",
+    "quote": "Second date မှာတော့ ရှက်ရွံ့မှုတွေ နည်းသွားပြီး တစ်ယောက်ရဲ့ အကြိုက်တွေကို ပွင့်ပွင့်လင်းလင်း ပြောပြရင်း ပထမဆုံးအကြိမ် Selfie အတူတူ လှလှပပ ရိုက်ဖြစ်ခဲ့ကြတယ်။",
     "image": "images/1st Selfie.jpg"
+  },
+  {
+    "title": "Football Jersey Date",
+    "quote": "သူမကို ပထမနှစ်တုန်းက ဝတ်ခဲ့တဲ့ IT Football Jersey လေး ပေးဝတ်ပြီး ကိုယ်တိုင်ကတော့ ဒုတိယနှစ်အင်္ကျီလေး ဝတ်လို့... နှစ်ယောက်တူတူ Matching ဝတ်ပြီး ချိန်းတွေ့ရင်း အမှတ်တရ ပုံလေးတွေ ရိုက်ဖြစ်ခဲ့ကြတယ်။",
+    "image": "images/jercydate.jpg"
+  },
+  {
+    "title": "Warso Thingan Memories",
+    "quote": "ကျောင်းမှာ ဝါဆိုသင်္ကန်း ကပ်လှူတဲ့နေ့လေးမှာတော့ နှစ်ယောက်သား အဖြူရောင် ဝတ်စုံလေးတွေ အပြိုင်ဝတ်ပြီး ပုညကုသိုလ်နဲ့အတူ အမှတ်တရ ဓာတ်ပုံလေးတွေ ရိုက်ဖြစ်ခဲ့ကြတယ်။",
+    "image": "images/Warso.jpg"
   },
   {
     "title": "Sweet Moments Together",
@@ -20,17 +30,7 @@
     "image": "images/inifinity date.jpg"
   },
   {
-    "title": "Sweet Moments Together",
-    "quote": "In your smile, I see something more beautiful than the stars.",
-    "image": "images/jercydate.jpg"
-  },
-  {
-    "title": "Sweet Moments Together",
-    "quote": "In your smile, I see something more beautiful than the stars.",
-    "image": "images/Warso.jpg"
-  },
-  {
-    "title": "Sweet Moments Together",
+    "title": "2nd Monthsary Date",
     "quote": "In your smile, I see something more beautiful than the stars.",
     "image": "images/2nd monthsarydate.jpg"
   },
