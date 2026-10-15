@@ -270,10 +270,21 @@ function setupLoadingScreen() {
   const loadingScreen = document.getElementById("app-loading-screen");
   if (!loadingScreen) return;
 
-  // 2.2 စက္ကန့်အကြာတွင် Loading Screen ကို Smooth Fade-out လုပ်မည်
-  setTimeout(() => {
-    loadingScreen.classList.add("fade-out");
-  }, 2200);
+  // PWA App အဖြစ် (Standalone Mode ဖြင့်) ဖွင့်ထားခြင်း ရှိ/မရှိ စစ်ဆေးခြင်း
+  const isStandalone =
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone ||
+    document.referrer.includes("android-app://");
+
+  if (isStandalone) {
+    // PWA App ဖွင့်ထားပါက Custom Loading Screen ကို လုံးဝ မပြဘဲ တိုက်ရိုက် ဖျောက်မည်
+    loadingScreen.style.display = "none";
+  } else {
+    // Browser ကနေ Normal Website အနေနဲ့ ဖွင့်မှသာ 2.2 စက္ကန့် Welcome Screen ပြမည်
+    setTimeout(() => {
+      loadingScreen.classList.add("fade-out");
+    }, 2200);
+  }
 }
 
 /* ================= PWA INSTALLATION SYSTEM ================= */
