@@ -2,7 +2,6 @@
   "name": "Yair & Shwe",
   "short_name": "Yair&Shwe",
   "description": "Together For - Our Love Story & Memories",
-  "id": "/",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

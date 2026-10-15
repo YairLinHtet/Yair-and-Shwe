@@ -270,7 +270,18 @@ function setupLoadingScreen() {
   const loadingScreen = document.getElementById("app-loading-screen");
   if (!loadingScreen) return;
 
-  // Custom Loading Screen ကို မည်သည့်နေရာမှဖွင့်ဖွင့် 2.2 စက္ကန့်အကြာတွင် Fade-out လုပ်မည်
+  // App ကို PWA (Standalone Mode) ဖြင့် ဖွင့်ထားခြင်း ဟုတ်မဟုတ် စစ်ဆေးမည်
+  const isStandalone =
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone;
+
+  // အကယ်၍ PWA App အနေနဲ့ ဝင်လာတာဆိုရင် Loading Screen ကို လုံးဝ ဖြုတ်ထားမည် (သို့မဟုတ် လိုသလို အချိန်ညှိနိုင်သည်)
+  if (isStandalone) {
+    loadingScreen.style.display = "none";
+    return;
+  }
+
+  // Browser ဘراဇာ (Web Browser) ထဲကနေ ဝင်ကြည့်မှသာ Loading Screen ကို ပြမည်
   setTimeout(() => {
     loadingScreen.classList.add("fade-out");
   }, 2200);
