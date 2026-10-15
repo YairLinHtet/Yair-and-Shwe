@@ -265,28 +265,48 @@ function setupFloatingWidget() {
   });
 }
 
+/* ================= APP LOADING SCREEN LOGIC ================= */
+function setupLoadingScreen() {
+  const loadingScreen = document.getElementById("app-loading-screen");
+  if (!loadingScreen) return;
+
+  // 2.2 စက္ကန့်အကြာတွင် Loading Screen ကို Smooth Fade-out လုပ်မည်
+  setTimeout(() => {
+    loadingScreen.classList.add("fade-out");
+  }, 2200);
+}
+
 /* ================= PWA INSTALLATION SYSTEM ================= */
 let deferredPrompt = null;
 
 function setupPWA() {
+  const pwaInstallNavBtn = document.getElementById("pwa-install-nav-btn");
+  const pwaModal = document.getElementById("pwa-modal");
+  const pwaModalClose = document.getElementById("pwa-modal-close");
+  const pwaInstallBtn = document.getElementById("pwa-install-btn");
+  const pwaNativeBox = document.getElementById("pwa-native-box");
+  const pwaIosInstructions = document.getElementById("pwa-ios-instructions");
+
+  // App ကို Install ပြုလုပ်ပြီးပါက သို့မဟုတ် App (Standalone Mode) ဖြင့် သုံးနေပါက Button ကို ဖျောက်မည်
+  const isStandalone =
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone;
+
+  if (isStandalone && pwaInstallNavBtn) {
+    pwaInstallNavBtn.style.display = "none";
+  }
+
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker
       .register("./sw.js")
       .then((reg) => {
         console.log("Service Worker Registered successfully.");
-        reg.update(); // Forces immediate update check
+        reg.update();
       })
       .catch((err) =>
         console.error("Service Worker Registration failed:", err),
       );
   }
-
-  const pwaModal = document.getElementById("pwa-modal");
-  const pwaModalClose = document.getElementById("pwa-modal-close");
-  const pwaInstallNavBtn = document.getElementById("pwa-install-nav-btn");
-  const pwaInstallBtn = document.getElementById("pwa-install-btn");
-  const pwaNativeBox = document.getElementById("pwa-native-box");
-  const pwaIosInstructions = document.getElementById("pwa-ios-instructions");
 
   const isIOS =
     /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -294,6 +314,18 @@ function setupPWA() {
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
+  });
+
+  // App ကို Install ပြုလုပ်ပြီးသွားသည့် Event ကို စောင့်ကြည့်ပြီး Button ကို ဖျောက်မည်
+  window.addEventListener("appinstalled", () => {
+    console.log("PWA installed successfully.");
+    if (pwaInstallNavBtn) {
+      pwaInstallNavBtn.style.display = "none";
+    }
+    if (pwaModal) {
+      pwaModal.classList.remove("active");
+    }
+    deferredPrompt = null;
   });
 
   if (pwaInstallNavBtn) {
@@ -321,6 +353,9 @@ function setupPWA() {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
         console.log(`User prompt outcome: ${outcome}`);
+        if (outcome === "accepted") {
+          if (pwaInstallNavBtn) pwaInstallNavBtn.style.display = "none";
+        }
         deferredPrompt = null;
         if (pwaModal) pwaModal.classList.remove("active");
       } else {
@@ -441,6 +476,7 @@ function createTrackHTML(item) {
 
 // Run initializations
 document.addEventListener("DOMContentLoaded", () => {
+  setupLoadingScreen();
   updateCounter();
   setInterval(updateCounter, 1000);
   loadMemories();
