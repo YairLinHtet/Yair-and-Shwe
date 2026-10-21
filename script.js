@@ -381,6 +381,18 @@ function setupPWA() {
   }
 }
 
+function handleCategoryArrow(container, items) {
+  const card = container.closest(".fav-card");
+  const arrowBtn = card ? card.querySelector(".arrow-btn") : null;
+  if (arrowBtn) {
+    if (items && items.length > 3) {
+      arrowBtn.style.display = "flex";
+    } else {
+      arrowBtn.style.display = "none";
+    }
+  }
+}
+
 async function loadFavorites() {
   try {
     const response = await fetch("favorites.json");
@@ -395,6 +407,7 @@ async function loadFavorites() {
     // Load Characters
     const charContainer = document.getElementById("fav-characters-list");
     if (charContainer && data.characters) {
+      handleCategoryArrow(charContainer, data.characters);
       const visible = data.characters.slice(0, 3);
       const hidden = data.characters.slice(3);
       let html = visible.map((c) => createCharHTML(c)).join("");
@@ -407,6 +420,7 @@ async function loadFavorites() {
     // Load Playlist
     const playlistContainer = document.getElementById("fav-playlist-list");
     if (playlistContainer && data.playlist) {
+      handleCategoryArrow(playlistContainer, data.playlist);
       const visible = data.playlist.slice(0, 3);
       const hidden = data.playlist.slice(3);
       let html = visible.map((t) => createTrackHTML(t)).join("");
@@ -424,6 +438,8 @@ function renderMediaCategory(containerId, items) {
   const container = document.getElementById(containerId);
   if (!container || !items) return;
 
+  handleCategoryArrow(container, items);
+
   const visible = items.slice(0, 3);
   const hidden = items.slice(3);
 
@@ -440,8 +456,10 @@ function createMediaHTML(item) {
       <img src="${item.cover}" alt="${item.title}" class="item-cover" />
       <div class="media-info">
         <span class="title">${item.title}</span>
-        <span style="font-size: clamp(0.5rem, 0.357rem + 0.714vw, 1rem);" class="year">(${item.year})</span>
+        <span  class="year">(${item.year})</span>
+        <span  class="studio">${item.studio}</span>
       </div>
+       ${item.trailer ? `<a href="${item.trailer}" target="_blank" class="trailer-link" >Watch Trailer</a>` : ""}
     </div>
   `;
 }
@@ -450,8 +468,10 @@ function createCharHTML(item) {
   return `
     <div class="char-info">
       <img src="${item.avatar}" alt="${item.name}" class="avatar-img" />
-      <!--change font size for character-->
-      <span style="font-size:clamp(0.7rem, 0.614rem + 0.429vw, 1rem); " >${item.name}</span>
+      <div class="media-info">
+      <span class="char-name">${item.name}</span>
+      <span class="char-movie">${item.movie}</span>
+      </div>     
     </div>
   `;
 }
