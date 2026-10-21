@@ -117,53 +117,74 @@ function setupImageModal() {
   }
 }
 
+/* ================= NEW PINBOARD GALLERY LOGIC ================= */
+let rawGalleryData = [];
+let currentGalleryFilter = 'all';
+
 async function loadGallery() {
-  const container = document.getElementById("gallery-container");
+  const container = document.getElementById("pinboardGrid");
+  if (!container) return;
 
   try {
     const response = await fetch("gallery.json");
-    const galleryItems = await response.json();
-
-    container.innerHTML = galleryItems
-      .map(
-        (item) => `
-      <div class="gallery-card">
-        <div class="gallery-photo-frame">
-          <img src="${item.image || "https://via.placeholder.com/600x338"}" 
-               alt="${item.title}" 
-               data-img="${item.image || "https://via.placeholder.com/600x338"}" 
-               class="gallery-img" />
-        </div>
-        <div class="gallery-content">
-          <h3>${item.title}</h3>
-          <p class="gallery-quote">${item.quote}</p>
-        </div>
-      </div>
-    `,
-      )
-      .join("");
-
-    setupGalleryModal();
+    rawGalleryData = await response.json();
+    renderPinboardGallery();
+    setupGalleryFilters();
   } catch (error) {
     console.error("Error loading gallery JSON:", error);
-    container.innerHTML =
-      '<p style="font-size: 0.8rem; padding: 10px;">Failed to load gallery items.</p>';
+    container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; font-size: 0.8rem; padding: 10px;">Failed to load gallery items.</p>';
   }
 }
 
-function setupGalleryModal() {
-  const modal = document.getElementById("image-modal");
-  const modalImg = document.getElementById("modal-img");
+function renderPinboardGallery() {
+  const container = document.getElementById("pinboardGrid");
+  if (!container) return;
 
-  document.querySelectorAll(".gallery-img").forEach((img) => {
-    img.addEventListener("click", () => {
-      const imgSrc = img.getAttribute("data-img");
-      if (imgSrc) {
-        modalImg.src = imgSrc;
-        modal.classList.add("active");
-      }
+  const filtered = rawGalleryData.filter(item => {
+    if (currentGalleryFilter === 'all') return true;
+    return true; 
+  });
+
+  // Slight random rotations for polaroid effect (-3deg to 3deg)
+  const rotations = [-3, 2, -2.5, 3, -1.5, 2.5, -3.5, 1.8];
+
+  container.innerHTML = filtered.map((item, index) => {
+    const rot = rotations[index % rotations.length];
+    return `
+      <article class="polaroid-card" style="--rot: ${rot}deg;" onclick="openGalleryModal('${item.image}')">
+        <div class="card-img-box">
+          <img src="${item.image || 'https://via.placeholder.com/600x338'}" alt="${item.title}" loading="lazy">
+        </div>
+        <div class="card-meta">
+          <span class="card-badge">Memory</span>
+          <span class="card-date">Special</span>
+        </div>
+        <h3 class="card-title">${item.title}</h3>
+        <p class="card-caption">${item.quote || ''}</p>
+      </article>
+    `;
+  }).join('');
+}
+
+function setupGalleryFilters() {
+  const filterBtns = document.querySelectorAll('.pinboard-section .filter-btn');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentGalleryFilter = btn.dataset.filter;
+      renderPinboardGallery();
     });
   });
+}
+
+function openGalleryModal(imgSrc) {
+  const modal = document.getElementById("image-modal");
+  const modalImg = document.getElementById("modal-img");
+  if (modal && modalImg && imgSrc) {
+    modalImg.src = imgSrc;
+    modal.classList.add("active");
+  }
 }
 
 function toggleExpand(cardId) {
@@ -453,11 +474,11 @@ function renderMediaCategory(containerId, items) {
 function createMediaHTML(item) {
   return `
     <div class="media-item">
-      <img src="${item.cover}" alt="${item.title}" class="item-cover" />
+      <img src="${item.cover}" alt="${item.title}" class="item-cover" loading="lazy" />
       <div class="media-info">
         <span class="title">${item.title}</span>
-        <span  class="year">(${item.year})</span>
-        <span  class="studio">${item.studio}</span>
+        <span class="year">(${item.year})</span>
+        <span class="studio">${item.studio}</span>
       </div>
        ${item.trailer ? `<a href="${item.trailer}" target="_blank" class="trailer-link" >Watch Trailer</a>` : ""}
     </div>
@@ -467,7 +488,7 @@ function createMediaHTML(item) {
 function createCharHTML(item) {
   return `
     <div class="char-info">
-      <img src="${item.avatar}" alt="${item.name}" class="avatar-img" />
+      <img src="${item.avatar}" alt="${item.name}" class="avatar-img" loading="lazy" />
       <div class="media-info">
       <span class="char-name">${item.name}</span>
       <span class="char-movie">${item.movie}</span>
@@ -479,11 +500,10 @@ function createCharHTML(item) {
 function createTrackHTML(item) {
   return `
     <div class="playlist-item" id="track-${item.id}">
-      <img src="${item.cover}" alt="${item.title}" class="album-art" />
+      <img src="${item.cover}" alt="${item.title}" class="album-art" loading="lazy" />
       <div class="track-info">
-      <!--change font size for play-->
-        <span  class="song-title">${item.title}</span>
-        <span  class="artist-name">${item.artist}</span>
+        <span class="song-title">${item.title}</span>
+        <span class="artist-name">${item.artist}</span>
         <div class="progress-bar-container">
           <div class="progress-bar" id="progress-${item.id}"></div>
         </div>

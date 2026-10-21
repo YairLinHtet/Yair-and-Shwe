@@ -57,7 +57,7 @@
 
       <!-- Main Hero Glass Card -->
       <section class="hero-card glass-panel" id="hero">
-        <h2>Together For</h2>
+        <h2>Being Together For</h2>
 
         <!-- timer layout -->
         <div id="together-counter" class="timer-display">
@@ -153,14 +153,28 @@
       <!-- Hidden Global Audio Player -->
       <audio id="global-audio-player"></audio>
 
-      <!-- Our Gallery Section -->
-      <section class="gallery-section" id="gallery">
-        <div class="gallery-title">
-          <h2>OUR GALLERY</h2>
+      <!-- Memory Pinboard Section -->
+      <section class="pinboard-section" id="gallery">
+        <div class="pinboard-header">
+          <h2>OUR MEMORIES</h2>
+          <p>Yair Linn & Shwe Zin's Special Moments</p>
         </div>
 
-        <div id="gallery-container" class="gallery-container">
-          <!-- Dynamically populated via gallery.json -->
+        <!-- Category Filter Controls -->
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">
+            All Memories
+          </button>
+          <button class="filter-btn" data-filter="milestones">
+            Milestones
+          </button>
+          <button class="filter-btn" data-filter="dates">Special Dates</button>
+          <button class="filter-btn" data-filter="trips">Trips & Walks</button>
+        </div>
+
+        <!-- Pinboard Grid -->
+        <div class="pinboard-grid" id="pinboardGrid">
+          <!-- Dynamically populated via gallery.json or script -->
         </div>
       </section>
     </main>
