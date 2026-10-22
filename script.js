@@ -16,11 +16,9 @@ function updateCounter() {
     return;
   }
 
-  // Calculate total elapsed days
   const diffTime = now - startDate;
   const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-  // Calculate Years, Months, Days
   let years = now.getFullYear() - startDate.getFullYear();
   let months = now.getMonth() - startDate.getMonth();
   let days = now.getDate() - startDate.getDate();
@@ -55,35 +53,41 @@ function updateCounter() {
 
 async function loadMemories() {
   const container = document.getElementById("memories-list");
+  if (!container) return;
 
   try {
     const response = await fetch("memories.json");
     const memories = await response.json();
 
     container.innerHTML = memories
-      .map(
-        (item) => `
-      <div class="memory-card glass-panel">
-        <span class="badge">${item.category}</span>
-        <div class="card-img" 
-             style="background-image: url('${item.image || "https://via.placeholder.com/250x110"}')"
-             data-img="${item.image || "https://via.placeholder.com/250x110"}">
-        </div>
-        <div class="card-info">
-          <h4>${item.title}</h4>
-          <div class="date-text">${item.date}</div>
-          <p>${item.description}</p>
-        </div>
-      </div>
-    `,
-      )
+      .map((item, index) => {
+        const positionClass = index % 2 === 0 ? "top" : "bottom";
+        const imgSrc = item.image || "images/sh-logo.webp";
+
+        return `
+          <div class="timeline-col ${positionClass}">
+            <div class="timeline-card-compact glass-panel">
+              <div class="compact-img-box" data-img="${imgSrc}">
+                <img src="${imgSrc}" alt="${item.title}" loading="lazy" />
+              </div>
+              <div class="compact-content">
+                <div>
+                  <h4 class="compact-title">${item.title}</h4>
+                  <div class="compact-date">${item.date}</div>
+                </div>
+                <p class="compact-desc">${item.description}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      })
       .join("");
 
     setupImageModal();
+    setupTimelineScroll();
   } catch (error) {
     console.error("Error loading memories JSON:", error);
-    container.innerHTML =
-      '<p style="font-size: 0.8rem; padding: 10px;">Failed to load memories.</p>';
+    container.innerHTML = '<p style="font-size: 0.8rem; text-align: center; padding: 10px; color: #ffffff;">Failed to load memories.</p>';
   }
 }
 
@@ -92,9 +96,11 @@ function setupImageModal() {
   const modalImg = document.getElementById("modal-img");
   const closeBtn = document.querySelector(".modal-close");
 
-  document.querySelectorAll(".card-img").forEach((imgCard) => {
-    imgCard.addEventListener("click", () => {
-      const imgSrc = imgCard.getAttribute("data-img");
+  if (!modal || !modalImg) return;
+
+  document.querySelectorAll(".compact-img-box").forEach((imgBox) => {
+    imgBox.addEventListener("click", () => {
+      const imgSrc = imgBox.getAttribute("data-img");
       if (imgSrc) {
         modalImg.src = imgSrc;
         modal.classList.add("active");
@@ -103,23 +109,65 @@ function setupImageModal() {
   });
 
   if (closeBtn) {
-    closeBtn.addEventListener("click", () => {
-      modal.classList.remove("active");
-    });
+    closeBtn.addEventListener("click", () => modal.classList.remove("active"));
   }
 
-  if (modal) {
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.classList.remove("active");
-      }
-    });
-  }
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.classList.remove("active");
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("active")) {
+      modal.classList.remove("active");
+    }
+  });
 }
 
-/* ================= NEW PINBOARD GALLERY LOGIC ================= */
+function setupTimelineScroll() {
+  const track = document.getElementById("memories-list");
+  const leftBtn = document.getElementById("scrollLeftBtn");
+  const rightBtn = document.getElementById("scrollRightBtn");
+
+  if (!track || !leftBtn || !rightBtn) return;
+
+  const updateArrowState = () => {
+    const tolerance = 5;
+    leftBtn.classList.toggle("disabled", track.scrollLeft <= tolerance);
+    rightBtn.classList.toggle("disabled", track.scrollLeft + track.clientWidth >= track.scrollWidth - tolerance);
+  };
+
+  track.addEventListener("scroll", updateArrowState);
+  window.addEventListener("resize", updateArrowState);
+  setTimeout(updateArrowState, 100);
+
+  leftBtn.onclick = () => {
+    const card = track.querySelector(".timeline-col");
+    if (card) track.scrollBy({ left: -(card.offsetWidth + 14), behavior: "smooth" });
+  };
+
+  rightBtn.onclick = () => {
+    const card = track.querySelector(".timeline-col");
+    if (card) track.scrollBy({ left: card.offsetWidth + 14, behavior: "smooth" });
+  };
+
+  let isDown = false, startX, scrollLeft;
+  track.addEventListener("mousedown", (e) => {
+    isDown = true;
+    track.classList.add("dragging");
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  });
+  track.addEventListener("mouseleave", () => { isDown = false; track.classList.remove("dragging"); });
+  track.addEventListener("mouseup", () => { isDown = false; track.classList.remove("dragging"); });
+  track.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    track.scrollLeft = scrollLeft - ((e.pageX - track.offsetLeft) - startX) * 1.5;
+    updateArrowState();
+  });
+}
+
 let rawGalleryData = [];
-let currentGalleryFilter = 'all';
+let currentGalleryFilter = "all";
 
 async function loadGallery() {
   const container = document.getElementById("pinboardGrid");
@@ -140,38 +188,43 @@ function renderPinboardGallery() {
   const container = document.getElementById("pinboardGrid");
   if (!container) return;
 
-  const filtered = rawGalleryData.filter(item => {
-    if (currentGalleryFilter === 'all') return true;
-    return true; 
+  const filtered = rawGalleryData.filter((item) => {
+    if (currentGalleryFilter === "all") return true;
+    return item.category == currentGalleryFilter;
   });
 
-  // Slight random rotations for polaroid effect (-3deg to 3deg)
   const rotations = [-3, 2, -2.5, 3, -1.5, 2.5, -3.5, 1.8];
 
-  container.innerHTML = filtered.map((item, index) => {
-    const rot = rotations[index % rotations.length];
-    return `
+  container.innerHTML = filtered
+    .map((item, index) => {
+      const rot = rotations[index % rotations.length];
+      const formattedCategory = item.category 
+        ? item.category.charAt(0).toUpperCase() + item.category.slice(1) 
+        : "Memory";
+
+      return `
       <article class="polaroid-card" style="--rot: ${rot}deg;" onclick="openGalleryModal('${item.image}')">
         <div class="card-img-box">
-          <img src="${item.image || 'https://via.placeholder.com/600x338'}" alt="${item.title}" loading="lazy">
+          <img src="${item.image || "https://via.placeholder.com/600x338"}" alt="${item.title}" loading="lazy">
         </div>
         <div class="card-meta">
-          <span class="card-badge">Memory</span>
-          <span class="card-date">Special</span>
+          <span class="card-badge">${formattedCategory}</span>
+          <span class="card-date">${item.date}</span>
         </div>
         <h3 class="card-title">${item.title}</h3>
-        <p class="card-caption">${item.quote || ''}</p>
+        <p class="card-caption">${item.quote || ""}</p>
       </article>
     `;
-  }).join('');
+    })
+    .join("");
 }
 
 function setupGalleryFilters() {
-  const filterBtns = document.querySelectorAll('.pinboard-section .filter-btn');
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  const filterBtns = document.querySelectorAll(".pinboard-section .filter-btn");
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
       currentGalleryFilter = btn.dataset.filter;
       renderPinboardGallery();
     });
@@ -189,12 +242,9 @@ function openGalleryModal(imgSrc) {
 
 function toggleExpand(cardId) {
   const card = document.getElementById(cardId);
-  if (card) {
-    card.classList.toggle("expanded");
-  }
+  if (card) card.classList.toggle("expanded");
 }
 
-// Declare active track state globally
 let currentPlayingId = null;
 
 function toggleAudio(trackId) {
@@ -204,31 +254,20 @@ function toggleAudio(trackId) {
 
   if (!audioElement) return;
 
-  // Stop currently playing track if switching to a new track
   if (currentPlayingId && currentPlayingId !== trackId) {
     const prevAudio = document.getElementById(`audio-${currentPlayingId}`);
-    const prevBtn = document.querySelector(
-      `#track-${currentPlayingId} .play-btn`,
-    );
-    const prevProgress = document.getElementById(
-      `progress-${currentPlayingId}`,
-    );
+    const prevBtn = document.querySelector(`#track-${currentPlayingId} .play-btn`);
+    const prevProgress = document.getElementById(`progress-${currentPlayingId}`);
 
-    if (prevAudio) {
-      prevAudio.pause();
-      prevAudio.currentTime = 0; // Reset position to match progress bar reset
-    }
+    if (prevAudio) { prevAudio.pause(); prevAudio.currentTime = 0; }
     if (prevBtn) prevBtn.textContent = "▶";
     if (prevProgress) prevProgress.style.width = "0%";
   }
 
-  // Attach event listeners once per audio element
   if (!audioElement.dataset.listenersAttached) {
     audioElement.addEventListener("timeupdate", () => {
       if (progressBar && audioElement.duration) {
-        const percentage =
-          (audioElement.currentTime / audioElement.duration) * 100;
-        progressBar.style.width = `${percentage}%`;
+        progressBar.style.width = `${(audioElement.currentTime / audioElement.duration) * 100}%`;
       }
     });
 
@@ -242,7 +281,6 @@ function toggleAudio(trackId) {
     audioElement.dataset.listenersAttached = "true";
   }
 
-  // Toggle Play / Pause
   if (audioElement.paused) {
     audioElement.play();
     if (playBtn) playBtn.textContent = "❚❚";
@@ -254,50 +292,31 @@ function toggleAudio(trackId) {
   }
 }
 
-/* ================= FLOATING WIDGET TOGGLE LOGIC ================= */
 function setupFloatingWidget() {
   const ball = document.getElementById("floating-ball");
   const menu = document.getElementById("floating-menu");
 
   if (!ball || !menu) return;
 
-  // Prevent drag default
   ball.addEventListener("dragstart", (e) => e.preventDefault());
+  ball.addEventListener("click", (e) => { e.stopPropagation(); menu.classList.toggle("hidden"); });
 
-  // Toggle menu smooth popup without layout shift
-  ball.addEventListener("click", (e) => {
-    e.stopPropagation();
-    menu.classList.toggle("hidden");
-  });
-
-  // Close menu when clicking outside
   document.addEventListener("click", (e) => {
     const widget = document.getElementById("floating-widget");
-    if (widget && !widget.contains(e.target)) {
-      menu.classList.add("hidden");
-    }
+    if (widget && !widget.contains(e.target)) menu.classList.add("hidden");
   });
 
-  // Close menu when a navigation link is clicked
   document.querySelectorAll(".floating-menu a").forEach((link) => {
-    link.addEventListener("click", () => {
-      menu.classList.add("hidden");
-    });
+    link.addEventListener("click", () => menu.classList.add("hidden"));
   });
 }
 
-/* ================= APP LOADING SCREEN LOGIC ================= */
 function setupLoadingScreen() {
   const loadingScreen = document.getElementById("app-loading-screen");
   if (!loadingScreen) return;
-
-  // Custom Loading Screen ကို 2.2 စက္ကန့်အကြာတွင် Fade-out လုပ်မည်
-  setTimeout(() => {
-    loadingScreen.classList.add("fade-out");
-  }, 2200);
+  setTimeout(() => loadingScreen.classList.add("fade-out"), 2200);
 }
 
-/* ================= PWA INSTALLATION SYSTEM ================= */
 let deferredPrompt = null;
 
 function setupPWA() {
@@ -308,44 +327,23 @@ function setupPWA() {
   const pwaNativeBox = document.getElementById("pwa-native-box");
   const pwaIosInstructions = document.getElementById("pwa-ios-instructions");
 
-  // App ကို Install ပြုလုပ်ပြီးပါက သို့မဟုတ် App (Standalone Mode) ဖြင့် သုံးနေပါက Button ကို ဖျောက်မည်
-  const isStandalone =
-    window.matchMedia("(display-mode: standalone)").matches ||
-    window.navigator.standalone;
-
-  if (isStandalone && pwaInstallNavBtn) {
-    pwaInstallNavBtn.style.display = "none";
-  }
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone;
+  if (isStandalone && pwaInstallNavBtn) pwaInstallNavBtn.style.display = "none";
 
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker
-      .register("./sw.js")
-      .then((reg) => {
-        console.log("Service Worker Registered successfully.");
-        reg.update();
-      })
-      .catch((err) =>
-        console.error("Service Worker Registration failed:", err),
-      );
+    navigator.serviceWorker.register("./sw.js").catch((err) => console.error("Service Worker failed:", err));
   }
 
-  const isIOS =
-    /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
   });
 
-  // App ကို Install ပြုလုပ်ပြီးသွားသည့် Event ကို စောင့်ကြည့်ပြီး Button ကို ဖျောက်မည်
   window.addEventListener("appinstalled", () => {
-    console.log("PWA installed successfully.");
-    if (pwaInstallNavBtn) {
-      pwaInstallNavBtn.style.display = "none";
-    }
-    if (pwaModal) {
-      pwaModal.classList.remove("active");
-    }
+    if (pwaInstallNavBtn) pwaInstallNavBtn.style.display = "none";
+    if (pwaModal) pwaModal.classList.remove("active");
     deferredPrompt = null;
   });
 
@@ -355,16 +353,8 @@ function setupPWA() {
       if (menu) menu.classList.add("hidden");
       if (pwaModal) pwaModal.classList.add("active");
 
-      if (deferredPrompt) {
-        if (pwaNativeBox) pwaNativeBox.style.display = "block";
-        if (pwaIosInstructions) pwaIosInstructions.style.display = "none";
-      } else if (isIOS) {
-        if (pwaNativeBox) pwaNativeBox.style.display = "none";
-        if (pwaIosInstructions) pwaIosInstructions.style.display = "block";
-      } else {
-        if (pwaNativeBox) pwaNativeBox.style.display = "block";
-        if (pwaIosInstructions) pwaIosInstructions.style.display = "none";
-      }
+      if (pwaNativeBox) pwaNativeBox.style.display = deferredPrompt || !isIOS ? "block" : "none";
+      if (pwaIosInstructions) pwaIosInstructions.style.display = !deferredPrompt && isIOS ? "block" : "none";
     });
   }
 
@@ -373,44 +363,24 @@ function setupPWA() {
       if (deferredPrompt) {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-        console.log(`User prompt outcome: ${outcome}`);
-        if (outcome === "accepted") {
-          if (pwaInstallNavBtn) pwaInstallNavBtn.style.display = "none";
-        }
+        if (outcome === "accepted" && pwaInstallNavBtn) pwaInstallNavBtn.style.display = "none";
         deferredPrompt = null;
         if (pwaModal) pwaModal.classList.remove("active");
       } else {
-        alert(
-          'Browser မူလ Install Prompt အဆင်မသင့်ပါက Browser Menu ထဲရှိ "Add to Home Screen" ကို အသုံးပြုပေးပါ။',
-        );
+        alert(' Browser ထဲရှိ "Add to Home Screen" ကို အသုံးပြုပေးပါ။');
       }
     });
   }
 
-  if (pwaModalClose) {
-    pwaModalClose.addEventListener("click", () => {
-      if (pwaModal) pwaModal.classList.remove("active");
-    });
-  }
-
-  if (pwaModal) {
-    pwaModal.addEventListener("click", (e) => {
-      if (e.target === pwaModal) {
-        pwaModal.classList.remove("active");
-      }
-    });
-  }
+  if (pwaModalClose) pwaModalClose.addEventListener("click", () => pwaModal.classList.remove("active"));
+  if (pwaModal) pwaModal.addEventListener("click", (e) => { if (e.target === pwaModal) pwaModal.classList.remove("active"); });
 }
 
 function handleCategoryArrow(container, items) {
   const card = container.closest(".fav-card");
   const arrowBtn = card ? card.querySelector(".arrow-btn") : null;
   if (arrowBtn) {
-    if (items && items.length > 3) {
-      arrowBtn.style.display = "flex";
-    } else {
-      arrowBtn.style.display = "none";
-    }
+    arrowBtn.style.display = items && items.length > 3 ? "flex" : "none";
   }
 }
 
@@ -419,13 +389,9 @@ async function loadFavorites() {
     const response = await fetch("favorites.json");
     const data = await response.json();
 
-    // Load Movies
     renderMediaCategory("fav-movies-list", data.movies);
-
-    // Load Series
     renderMediaCategory("fav-series-list", data.series);
 
-    // Load Characters
     const charContainer = document.getElementById("fav-characters-list");
     if (charContainer && data.characters) {
       handleCategoryArrow(charContainer, data.characters);
@@ -438,7 +404,6 @@ async function loadFavorites() {
       charContainer.innerHTML = html;
     }
 
-    // Load Playlist
     const playlistContainer = document.getElementById("fav-playlist-list");
     if (playlistContainer && data.playlist) {
       handleCategoryArrow(playlistContainer, data.playlist);
@@ -460,7 +425,6 @@ function renderMediaCategory(containerId, items) {
   if (!container || !items) return;
 
   handleCategoryArrow(container, items);
-
   const visible = items.slice(0, 3);
   const hidden = items.slice(3);
 
@@ -514,7 +478,6 @@ function createTrackHTML(item) {
   `;
 }
 
-// Run initializations
 document.addEventListener("DOMContentLoaded", () => {
   setupLoadingScreen();
   updateCounter();

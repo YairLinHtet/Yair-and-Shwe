@@ -3,26 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yair & Shwe</title>
+    <title>Yair & Shwe - Our Love Story & Memories</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Explore the love story, timeline memories, favorites, and photo gallery of Yair Linn Htet and Shwe Zin Htun." />
+    <meta name="keywords" content="Yair and Shwe, Love Story, Couple Website, Memories, Gallery, Yair Linn Htet, Shwe Zin Htun" />
+    <meta name="author" content="Yair Linn Htet" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Social Media SEO -->
+    <meta property="og:title" content="Yair & Shwe - Our Love Story" />
+    <meta property="og:description" content="Explore our special moments, milestones, and memories together." />
+    <meta property="og:image" content="images/sh-logo.webp" />
+    <meta property="og:type" content="website" />
+
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" type="image/png" href="images/sh-logo.webp" />
     <script src="script.js" defer></script>
 
     <!-- Meta & PWA Configurations -->
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="images/sh-logo.webp"
-    />
     <link rel="apple-touch-icon" href="images/sh-logo.webp" />
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#3d1c47" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Yair & Shwe" />
   </head>
   <body>
@@ -30,27 +34,25 @@
     <div id="app-loading-screen" class="loading-screen">
       <div class="loading-content">
         <img src="images/sh-logo.webp" alt="Logo" class="loading-logo" />
-        <h2 class="welcome-title">Welcome to Our Website</h2>
+        <h1 class="welcome-title">Welcome to Our Website</h1>
         <p class="names-text">Yair Linn Htet & Shwe Zin Htun</p>
         <div class="heart-spinner">💖</div>
       </div>
     </div>
+
     <main class="glass-container">
       <!-- Header with Image Logo -->
       <header class="header">
         <a class="logo-box" href="index.html">
-          <img src="images/sh-logo.webp" alt="Logo" class="site-logo" />
+          <img src="images/sh-logo.webp" alt="Yair and Shwe Logo" class="site-logo" />
         </a>
 
         <div class="profile-pics">
           <div class="circle-avatar">
-            <img
-              src="https://avatars.githubusercontent.com/u/210270880?v=4"
-              alt="Yair"
-            />
+            <img src="https://avatars.githubusercontent.com/u/210270880?v=4" alt="Yair Avatar" />
           </div>
           <div class="circle-avatar">
-            <img src="images/kalaylay.webp" alt="Shwe" />
+            <img src="images/kalaylay.webp" alt="Shwe Avatar" />
           </div>
         </div>
       </header>
@@ -62,9 +64,7 @@
         <!-- timer layout -->
         <div id="together-counter" class="timer-display">
           <div id="date-row" class="timer-row primary-row">Loading...</div>
-          <div id="total-days-row" class="timer-row total-days-row">
-            (0 Days)
-          </div>
+          <div id="total-days-row" class="timer-row total-days-row">(0 Days)</div>
           <div id="time-row" class="timer-row secondary-row">00:00:00</div>
         </div>
 
@@ -76,10 +76,7 @@
         <div class="profile-card glass-panel">
           <h3>Yair Linn Htet</h3>
           <div class="photo-placeholder">
-            <img
-              src="https://avatars.githubusercontent.com/u/210270880?v=4"
-              alt="Yair"
-            />
+            <img src="https://avatars.githubusercontent.com/u/210270880?v=4" alt="Yair Linn Htet" />
           </div>
           <p>17.6.1998</p>
         </div>
@@ -89,34 +86,39 @@
         <div class="profile-card glass-panel">
           <h3>Shwe Zin Htun</h3>
           <div class="photo-placeholder">
-            <img src="images/kalaylay.webp" alt="Shwe" />
+            <img src="images/kalaylay.webp" alt="Shwe Zin Htun" />
           </div>
           <p>14.12.2005</p>
         </div>
       </section>
 
-      <!-- Horizontal Scrollable Memories -->
+      <!-- Horizontal Timeline Memories Section -->
       <section class="memories-section" id="memories">
         <div class="section-title">
           <h2>OUR MEMORIES</h2>
         </div>
 
-        <div class="memories-scroll-container" id="memories-list">
-          <!-- Loaded via memories.json -->
+        <!-- Timeline Wrapper with Scroll Buttons -->
+        <div class="horizontal-timeline-wrapper">
+          <button class="scroll-arrow scroll-left" id="scrollLeftBtn" aria-label="Scroll Left">&#9664;</button>
+          <div class="horizontal-timeline-track" id="memories-list">
+            <!-- Dynamically populated via memories.json -->
+          </div>
+          <button class="scroll-arrow scroll-right" id="scrollRightBtn" aria-label="Scroll Right">&#9654;</button>
         </div>
       </section>
 
       <!-- Favorites Grid Section -->
-      <section class="favorites-section">
+      <section class="favorites-section" id="favorites">
         <div class="section-title fav-title">
           <h2>OUR FAVOURITES</h2>
         </div>
-        <div class="favorites-grid" id="favorites">
+        <div class="favorites-grid">
           <!-- FAVOURITE MOVIES -->
           <div class="fav-card glass-panel" id="fav-movies">
             <h3>FAVOURITE MOVIES</h3>
             <div class="fav-list-container" id="fav-movies-list"></div>
-            <button class="arrow-btn" onclick="toggleExpand('fav-movies')">
+            <button class="arrow-btn" onclick="toggleExpand('fav-movies')" aria-label="Toggle Movies">
               <span class="arrow-down">▼</span>
             </button>
           </div>
@@ -125,7 +127,7 @@
           <div class="fav-card glass-panel" id="fav-series">
             <h3>FAVOURITE SERIES</h3>
             <div class="fav-list-container" id="fav-series-list"></div>
-            <button class="arrow-btn" onclick="toggleExpand('fav-series')">
+            <button class="arrow-btn" onclick="toggleExpand('fav-series')" aria-label="Toggle Series">
               <span class="arrow-down">▼</span>
             </button>
           </div>
@@ -134,7 +136,7 @@
           <div class="fav-card glass-panel" id="fav-characters">
             <h3>FAVOURITE CHARACTERS</h3>
             <div class="fav-list-container" id="fav-characters-list"></div>
-            <button class="arrow-btn" onclick="toggleExpand('fav-characters')">
+            <button class="arrow-btn" onclick="toggleExpand('fav-characters')" aria-label="Toggle Characters">
               <span class="arrow-down">▼</span>
             </button>
           </div>
@@ -143,7 +145,7 @@
           <div class="fav-card glass-panel" id="fav-playlist">
             <h3>OUR PLAYLIST</h3>
             <div class="fav-list-container" id="fav-playlist-list"></div>
-            <button class="arrow-btn" onclick="toggleExpand('fav-playlist')">
+            <button class="arrow-btn" onclick="toggleExpand('fav-playlist')" aria-label="Toggle Playlist">
               <span class="arrow-down">▼</span>
             </button>
           </div>
@@ -156,32 +158,28 @@
       <!-- Memory Pinboard Section -->
       <section class="pinboard-section" id="gallery">
         <div class="pinboard-header">
-          <h2>OUR MEMORIES</h2>
+          <h2>OUR GALLERY</h2>
           <p>Yair Linn & Shwe Zin's Special Moments</p>
         </div>
 
         <!-- Category Filter Controls -->
         <div class="filter-bar">
-          <button class="filter-btn active" data-filter="all">
-            All Memories
-          </button>
-          <button class="filter-btn" data-filter="milestones">
-            Milestones
-          </button>
-          <button class="filter-btn" data-filter="dates">Special Dates</button>
+          <button class="filter-btn active" data-filter="all">All Memories</button>
+          <button class="filter-btn" data-filter="milestones">Milestones</button>
+          <button class="filter-btn" data-filter="dates">Dates</button>
+          <button class="filter-btn" data-filter="special-dates">Special Dates</button>
           <button class="filter-btn" data-filter="trips">Trips & Walks</button>
         </div>
 
         <!-- Pinboard Grid -->
         <div class="pinboard-grid" id="pinboardGrid">
-          <!-- Dynamically populated via gallery.json or script -->
+          <!-- Dynamically populated via gallery.json -->
         </div>
       </section>
     </main>
 
     <!-- Fixed Floating Ball Navigation -->
-    <div id="floating-widget">
-      <!-- Menu placed FIRST so flex column displays it above the ball -->
+    <nav id="floating-widget" aria-label="Floating Navigation">
       <div id="floating-menu" class="floating-menu hidden" draggable="false">
         <ul>
           <li><a href="#hero" class="nav-link">Home</a></li>
@@ -197,11 +195,10 @@
         </ul>
       </div>
 
-      <!-- Ball placed SECOND -->
-      <div id="floating-ball" class="floating-ball">
+      <div id="floating-ball" class="floating-ball" role="button" aria-label="Toggle Menu">
         <span class="heart-pulse-icon">💖</span>
       </div>
-    </div>
+    </nav>
 
     <!-- PWA Installation Modal Guide -->
     <div id="pwa-modal" class="pwa-modal">
@@ -209,32 +206,17 @@
         <span class="pwa-modal-close" id="pwa-modal-close">&times;</span>
         <img src="images/sh-logo.webp" alt="App Logo" class="pwa-modal-logo" />
         <h3>Install Yair & Shwe App</h3>
-        <p>
-          Install ပြုလုပ်ပြီး ဖုန်း Home Screen ပေါ်မှာ App တစ်ခုလို တိုက်ရိုက်
-          အသုံးပြုနိုင်ပါတယ်။
-        </p>
+        <p>Install ပြုလုပ်ပြီး ဖုန်း Home Screen ပေါ်မှာ App တစ်ခုလို တိုက်ရိုက် အသုံးပြုနိုင်ပါတယ်။</p>
 
         <div id="pwa-native-box">
-          <button id="pwa-install-btn" class="pwa-action-btn">
-            Install App Now
-          </button>
+          <button id="pwa-install-btn" class="pwa-action-btn">Install App Now</button>
         </div>
 
         <div id="pwa-ios-instructions" class="pwa-ios-instructions">
           <p class="ios-title"><strong>iOS Safari ဖြင့် သုံးနေပါက:</strong></p>
           <ol>
-            <li>
-              Safari Browser အောက်ခြေရှိ
-              <strong
-                >Share Icon ( ⎋ /
-                <span style="font-size: 1.2rem">⇡</span> )</strong
-              >
-              ကို နှိပ်ပါ။
-            </li>
-            <li>
-              အောက်သို့ ဆွဲပြီး <strong>"Add to Home Screen" ( ➕ )</strong> ကို
-              ရွေးပါ။
-            </li>
+            <li>Safari Browser အောက်ခြေရှိ <strong>Share Icon ( ⎋ / <span style="font-size: 1.2rem">⇡</span> )</strong> ကို နှိပ်ပါ။</li>
+            <li>အောက်သို့ ဆွဲပြီး <strong>"Add to Home Screen" ( ➕ )</strong> ကို ရွေးပါ။</li>
           </ol>
         </div>
       </div>
