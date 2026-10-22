@@ -4,37 +4,21 @@
     "title": "Telegram Message",
     "date": "26.06.2026",
     "description": "ဖိုင် ၄ ခု ကစတင်ခဲ့တဲ့ တို့နှစ်ယောက်ရဲ့ အစပြုခြင်းပုံပြင်လေး",
-    "image": "images/Telegram SS.jpg"
+    "image": "images/first-conversation.webp"
   },
   {
     "category": "Confession",
     "title": "Love Confession",
     "date": "1.07.2026",
     "description": "ရင်ထဲက အချစ်တွေကို စတင်ဖွင့်ဟဝန်ခံခဲ့သည့်နေ့",
-    "image": "images/loveconfession.jpg"
+    "image": "images/love-confession.webp"
   },
   {
     "category": "Anniversary",
     "title": "Love Accepted",
     "date": "10.07.2026",
     "description": "သူမဆီက 'ချစ်တယ်' ဆိုတဲ့ သာယာလှပတဲ့ အဖြေလေးကို ရရှိခဲ့သည့်နေ့",
-    "image": "images/loveletter.jpg"
-  },
-
-  {
-    "category": "Stylish",
-    "title": "Her Personal Stylish",
-    "date": "6.08.2026",
-    "description": "ချစ်သူလေးရဲ့ ဆံပင်ကျစ်ပေးတဲ့နေ့က ရိုက်ထားသောပုံလေး",
-    "image": "images/firsthairstyle.jpg"
-  },
-
-  {
-    "category": "Stylish",
-    "title": "Her Personal Stylish 2nd",
-    "date": "7.08.2026",
-    "description": "ချစ်သူလေးရဲ့ ဆံပင် ဒုတိယအကြိမ်ကျစ်ပေးတဲ့နေ့က ရိုက်ထားသောပုံလေး",
-    "image": "images/secondhairstyle.jpg"
+    "image": "images/love-letter.webp"
   },
 
   {
@@ -42,14 +26,30 @@
     "title": "Reduce Smoking",
     "date": "13.07.2026",
     "description": "ဆေးလိပ်တစ်ရက်သုံးလိပ်ထက်ပိုမသောက်ရဘူးလို့ကတိပေးခဲ့",
-    "image": "images/nosmoking.jpg"
+    "image": "images/no-smoking.webp"
   },
   {
     "category": "No Smoking",
     "title": "No Smoking",
     "date": "16.07.2026",
     "description": "ဆေးလိပ်ကိုလုံးဝဖျက်ဖို့ကတိပေးခဲ့သောနေ့",
-    "image": "images/nosmoking.jpg"
+    "image": ""
+  },
+
+  {
+    "category": "Stylish",
+    "title": "Her Personal Stylish",
+    "date": "6.08.2026",
+    "description": "ချစ်သူလေးရဲ့ ဆံပင်ကျစ်ပေးတဲ့နေ့က ရိုက်ထားသောပုံလေး",
+    "image": "images/first-hair-style.webp"
+  },
+
+  {
+    "category": "Stylish",
+    "title": "Her Personal Stylish 2nd",
+    "date": "7.08.2026",
+    "description": "ချစ်သူလေးရဲ့ ဆံပင် ဒုတိယအကြိမ်ကျစ်ပေးတဲ့နေ့က ရိုက်ထားသောပုံလေး",
+    "image": "images/second-hairstyle.webp"
   },
   {
     "category": "Monthsary",
